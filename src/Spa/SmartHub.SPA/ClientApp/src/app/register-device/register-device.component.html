@@ -1,0 +1,16 @@
+<button class="btn btn-primary"(click)="goBack()">Go back to devices</button>
+<form [formGroup]="registerDeviceForm" (ngSubmit)="onSubmit()">
+  <div class="form-group row">
+    <label for="deviceName" class="col-sm-2 col-form-label col-form-label-sm"> Name</label>
+    <div class="col-sm-5">
+      <input type="text" formControlName="name" class="form-control form-control-sm" id="deviceName" placeholder="Device name...">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="deviceDesc" class="col-sm-2 col-form-label col-form-label-sm">Description</label>
+    <div class="col-sm-5">
+      <textarea formControlName="description" class="form-control" id="descriptionArea" rows="3"></textarea>
+    </div>
+  </div>
+  <button type="submit" [disabled]="!registerDeviceForm.valid" class="btn btn-primary">Register device</button>
+</form>

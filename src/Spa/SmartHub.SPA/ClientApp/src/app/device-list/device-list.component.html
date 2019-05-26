@@ -1,0 +1,7 @@
+<div class="device-container">
+    <div class="device-toolbar">
+        <button routerLink="/registerDevice" class="btn btn-primary">Register a new device</button>
+      </div>
+  <device-card class="device-card" *ngFor="let deviceDesc of devicesList" 
+     [device]="deviceDesc"></device-card>
+</div>
