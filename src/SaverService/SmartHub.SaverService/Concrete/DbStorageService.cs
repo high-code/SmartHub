@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using SmartHub.SaverService.Concrete;
 using SmartHub.SaverService.DbEntities;
 using SmartHub.SaverService.DTO;
 
@@ -9,13 +10,12 @@ namespace SmartHub.SaverService
   public class DbStorageService : IStorageService
   {
 
-    private readonly IRepository<DbMeasurement> _measurementRepository;
-    private readonly IRepository<DbStatus> _statusRepository;
-    public DbStorageService(IRepository<DbMeasurement> measurementRepository,
-      IRepository<DbStatus> statusRepository)
+    private readonly IServiceProvider _serviceProvider;
+
+    public DbStorageService(IServiceProvider serviceProvider)
     {
-      _measurementRepository = measurementRepository;
-      _statusRepository = statusRepository;
+      _serviceProvider = serviceProvider;
+
     }
 
     public void StoreMeasurements(string rawData)
@@ -30,7 +30,12 @@ namespace SmartHub.SaverService
         DtSend = measurementDto.DtSend
       };
 
-      _measurementRepository.Add(dbMeasurement);
+      using (var scope = _serviceProvider.CreateScope())
+      {
+        var measurementRepository = scope.ServiceProvider.GetRequiredService<IRepository<DbMeasurement>>();
+        measurementRepository.Add(dbMeasurement);
+      }
+      
     }
 
     public void StoreStatus(string rawData)
@@ -43,7 +48,12 @@ namespace SmartHub.SaverService
         Status = statusDto.Status
       };
 
-      _statusRepository.Add(dbStatus);
+      using (var scope = _serviceProvider.CreateScope())
+      {
+        var statusRepository = scope.ServiceProvider.GetRequiredService<IRepository<DbStatus>>();
+        statusRepository.Add(dbStatus);
+      }
+
     }
   }
 }

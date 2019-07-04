@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text;
-using Dapper;
+﻿using Dapper;
 using Npgsql;
 using SmartHub.SaverService.DbEntities;
-using SmartHub.SaverService.DTO;
 
-namespace SmartHub.SaverService
+namespace SmartHub.SaverService.Concrete
 {
   public interface IRepository<in T>
   {
@@ -31,7 +25,6 @@ namespace SmartHub.SaverService
 
     public void Add(DbMeasurement measurement)
     {
-
 
       using(var conn = new NpgsqlConnection(_connectionString))
       {

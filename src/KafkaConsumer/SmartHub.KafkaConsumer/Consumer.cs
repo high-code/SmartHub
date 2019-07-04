@@ -22,7 +22,6 @@ namespace SmartHub.KafkaConsumer
     public void Listen(Dictionary<string, Action<string>> consumersCallbacks, IEnumerable<string> topics, CancellationToken token)
     {
 
-
       using (var c = new ConsumerBuilder<Ignore, string>(_consumerConfig).Build())
       {
 

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SmartHub.KafkaConsumer;
+using SmartHub.SaverService.Concrete;
 using SmartHub.SaverService.DbEntities;
 using SmartHub.SaverService.DTO;
 
