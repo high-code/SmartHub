@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using SmartHub.NotificationService.Hubs;
 using SmartHub.NotificationService.NotificationModels;
 
-namespace SmartHub.NotificationService
+namespace SmartHub.NotificationService.Concrete
 {
 
   public interface INotificationService
@@ -22,11 +18,11 @@ namespace SmartHub.NotificationService
 
   public class NotificationService : INotificationService
   {
-    private readonly IHubContext<TelemetryHub> _telemetryHub;
+    private readonly IServiceProvider _serviceProvider;
 
-    public NotificationService(IHubContext<TelemetryHub> hub)
+    public NotificationService(IServiceProvider serviceProvider)
     {
-      _telemetryHub = hub;
+      _serviceProvider = serviceProvider;
     }
 
     public void SendMeasurementNotification(string rawTelemetry)
@@ -40,9 +36,14 @@ namespace SmartHub.NotificationService
         Type = measurementDto.Type,
         Value = measurementDto.Value
       };
-      // check if device exist
-      var groupName = measurementNotification.DeviceId.ToString();
-      _telemetryHub.Clients.Group(groupName).SendAsync("sendMeasurement", measurementNotification);
+
+      using (var scope = _serviceProvider.CreateScope())
+      {
+        var telemetryHub = scope.ServiceProvider.GetRequiredService<IHubContext<TelemetryHub>>();
+        var groupName = measurementNotification.DeviceId.ToString();
+        telemetryHub.Clients.Group(groupName).SendAsync("sendMeasurement", measurementNotification);
+      }
+
     }
 
 
@@ -57,10 +58,12 @@ namespace SmartHub.NotificationService
         DeviceStatus = statusDto.DeviceStatus
       };
 
-      // check if device exist
-      var groupName = statusNotification.DeviceId.ToString();
-      _telemetryHub.Clients.Groups(groupName).SendAsync("sendStatus", statusNotification);
-
+      using (var scope = _serviceProvider.CreateScope())
+      {
+        var telemetryHub = scope.ServiceProvider.GetRequiredService<IHubContext<TelemetryHub>>();
+        var groupName = statusNotification.DeviceId.ToString();
+        telemetryHub.Clients.Group(groupName).SendAsync("sendMeasurement", statusNotification);
+      }
     }
   }
 }

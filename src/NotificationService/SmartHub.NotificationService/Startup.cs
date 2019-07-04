@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SmartHub.KafkaConsumer;
+using SmartHub.NotificationService.Concrete;
 using SmartHub.NotificationService.Hubs;
 
 namespace SmartHub.NotificationService
@@ -39,7 +40,7 @@ namespace SmartHub.NotificationService
       services.AddSignalR().AddRedis(
         Configuration["RedisURI"], options => options.Configuration.ClientName = "NotificationService");
       services.AddHostedService<ConsumerHostedService>();
-      services.AddTransient<INotificationService, NotificationService>();
+      services.AddSingleton<INotificationService, Concrete.NotificationService>();
       services.AddSingleton<IKafkaConsumer, Consumer>(i => new Consumer(i.GetRequiredService<ILogger<Consumer>>(),
         new ConsumerConfig
         {
@@ -74,11 +75,7 @@ namespace SmartHub.NotificationService
         });
       }
 
-
-
       app.UseSignalR(builder => builder.MapHub<TelemetryHub>("/telemetry"));
-      
-
       app.UseHttpsRedirection();
       app.UseStaticFiles();
  

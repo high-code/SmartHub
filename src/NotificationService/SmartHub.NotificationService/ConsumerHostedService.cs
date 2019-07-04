@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using SmartHub.KafkaConsumer;
+using SmartHub.NotificationService.Concrete;
 
 namespace SmartHub.NotificationService
 {
