@@ -10,12 +10,13 @@ import { RegisterDeviceComponent } from './register-device/register-device.compo
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './services/in-memory-data-service.service';
 import { HttpClientModule } from '@angular/common/http';
-import { DeviceService } from './services/device.service';
 import { DevicePageComponent } from './device-page/device-page.component';
 import { NotificationBoxComponent } from './notification-box/notification-box.component';
 import { NotificationComponent } from './notification/notification.component';
 import { NotificationDirective } from './notification-box/notification-directive.directive';
 import { ToastrModule } from 'ngx-toastr';
+import { LoginBoardComponent } from './login-board/login-board.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ToastrModule } from 'ngx-toastr';
     DevicePageComponent,
     NotificationBoxComponent,
     NotificationComponent,
-    NotificationDirective
+    NotificationDirective,
+    LoginBoardComponent
   ],
   imports: [
     BrowserModule,
@@ -35,8 +37,8 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
-    //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false}),
+    ToastrModule.forRoot(),
+    NgxSpinnerModule
   ],
   providers: [],
   entryComponents: [NotificationComponent],

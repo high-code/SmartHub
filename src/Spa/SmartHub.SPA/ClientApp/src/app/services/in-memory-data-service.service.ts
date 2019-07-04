@@ -15,7 +15,7 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
 
     const devices = [
-      { id: 1, name: "Arduino", description : "My first device"},
+      { id: 1, name: "Arduino", description : "My first device", deviceId: "7b6c4350-de4a-420a-a782-65e8ea331487"},
       { id: 2, name: "NodeMCU", description : "My second device"},
       { id: 3, name: "STM32", description : "My third device"},
       { id: 4, name: "Arduino Nano", description : "A fourth device"}

@@ -1,4 +1,6 @@
-﻿namespace SmartHub.SaverService
+﻿using System;
+
+namespace SmartHub.NotificationService.NotificationModels
 {
   public enum TelemetryType
   {
@@ -6,9 +8,9 @@
     Humidity
   }
 
-  public class Telemetry
+  public class Measurement
   {
-    public int DeviceId { get; set; }
+    public Guid DeviceId { get; set; }
 
     public TelemetryType Type { get; set; }
 

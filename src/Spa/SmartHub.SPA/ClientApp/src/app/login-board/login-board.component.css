@@ -1,0 +1,17 @@
+.container {
+    position: relative;
+    height: 100%
+}
+
+.login-board {
+    position: absolute;
+    width:35%;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-board-caption {
+    text-align: center;
+    font-size:40px;
+}

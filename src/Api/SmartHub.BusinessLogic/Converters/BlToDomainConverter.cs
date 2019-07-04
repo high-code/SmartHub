@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using SmartHub.BL.Models;
 using SmartHub.BusinessLogic.Models;
 
 namespace SmartHub.BL.Converters

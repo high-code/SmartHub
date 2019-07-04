@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace SmartHub.BL.Models
+namespace SmartHub.BusinessLogic.Models
 {
   public class TimeSeries
   {

@@ -10,7 +10,7 @@ using SmartHub.Domain;
 namespace SmartHub.Domain.Migrations
 {
     [DbContext(typeof(SmartHubContext))]
-    [Migration("20190523095356_Initial")]
+    [Migration("20190629130745_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,32 @@ namespace SmartHub.Domain.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasAlternateKey("DeviceId");
+
                     b.ToTable("devices");
+                });
+
+            modelBuilder.Entity("SmartHub.Domain.Entities.Measurement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnName("deviceid");
+
+                    b.Property<DateTime?>("DtSend")
+                        .HasColumnName("dtsend");
+
+                    b.Property<int>("Type")
+                        .HasColumnName("type");
+
+                    b.Property<double>("Value")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("measurements");
                 });
 #pragma warning restore 612, 618
         }

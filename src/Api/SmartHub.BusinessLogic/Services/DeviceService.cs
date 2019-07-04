@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SmartHub.BL.Contracts;
 using SmartHub.BL.Converters;
 using SmartHub.BL.Helpers;
-using SmartHub.BL.Models;
+using SmartHub.BusinessLogic.Contracts;
 using SmartHub.BusinessLogic.Models;
 using SmartHub.Domain.Contracts;
+using SmartHub.Domain.Entities;
+using Device = SmartHub.BusinessLogic.Models.Device;
+using Measurement = SmartHub.BusinessLogic.Models.Measurement;
 
 namespace SmartHub.BL.Services
 {
@@ -65,6 +67,17 @@ namespace SmartHub.BL.Services
       return blDevice;
     }
 
+    public IEnumerable<Measurement> GetTelemetry(int deviceId, DateTime? from, DateTime? end)
+    {
+
+      var telemetries = _unitOfWork.Measurements.Find(t => t.Id == deviceId && t.DtSend < end && t.DtSend > end);
+
+      var convertedTelemetries = telemetries.Select(DomainToBlConverter.ToMeasurement);
+
+      return convertedTelemetries;
+
+    }
+
     public IEnumerable<Device> GetDevices()
     {
       var devices = _unitOfWork.Devices.GetAll();
@@ -77,6 +90,8 @@ namespace SmartHub.BL.Services
         Description = d.Description
       });
     }
+
+
 
     public void DeleteDevice(int deviceId)
     {

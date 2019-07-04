@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
-using SmartHub.BL.Models;
 using SmartHub.BusinessLogic.Models;
+using SmartHub.Domain.Entities;
+using Device = SmartHub.BusinessLogic.Models.Device;
+using Measurement = SmartHub.BusinessLogic.Models.Measurement;
 
-namespace SmartHub.BL.Contracts
+namespace SmartHub.BusinessLogic.Contracts
 {
   public interface IDeviceService
   {
@@ -14,6 +16,8 @@ namespace SmartHub.BL.Contracts
     void UpdateDevice(int id,Device device);
 
     Device GetDeviceById(int id);
+
+    IEnumerable<Measurement> GetTelemetry(int deviceId, DateTime? from, DateTime? end);
 
     IEnumerable<Device> GetDevices();
 

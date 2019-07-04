@@ -11,10 +11,27 @@
     Description: {{device.description}}
   </p>
   <button class="btn btn-primary" (click)="deleteDevice(device.id)">Delete</button>
-
-  <p>Received measurements</p>
-  <div *ngFor="let measurement of measurements">
-    Data:{{measurement}}
-  </div>
 </div>
+<p>Received measurements</p>
+<div class="realtimeChart">
+  <canvas id="chart"></canvas>
+</div>
+
+<div class="saved-data">
+  <!-- <table>
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Type</th>
+        <th scope="col">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let telemetry of savedTelemetry">
+      </tr>
+    </tbody>
+  </table> -->
+</div>
+
+
 

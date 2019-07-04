@@ -1,36 +1,52 @@
 ﻿using System;
+using System.Collections.Generic;
+using Confluent.Kafka;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
-using Microsoft.Extensions.Configuration.FileExtensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using SmartHub.KafkaConsumer;
+using SmartHub.SaverService.DbEntities;
+using SmartHub.SaverService.DTO;
 
 namespace SmartHub.SaverService
 {
   class Program
   {
+    private static IConfiguration _configuration;
+
     static void Main(string[] args)
     {
 
-      IConfiguration config = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json", true, true)
+      _configuration = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json", false, false)
+        .AddEnvironmentVariables()
         .Build();
 
-
-      var serviceProvider = new ServiceCollection()
+      var serviceCollection = new ServiceCollection()
         .AddLogging()
-        .AddSingleton<IKafkaConsumer, DatabaseConsumer>()
-        .AddScoped<ITelemetryRepository>(provider => new TelemetryRepository(config["connectionString"]));
-        
+        .AddSingleton<IStorageService, DbStorageService>()
+        .AddSingleton<IKafkaConsumer, Consumer>(i => new Consumer(i.GetRequiredService<ILogger<Consumer>>(), new ConsumerConfig
+        {
+          BootstrapServers = _configuration["BrokerURI"],
+          GroupId = _configuration["KafkaConsumerGroupId"],
+          AutoOffsetReset = AutoOffsetReset.Earliest
+        }))
+        .AddScoped<IRepository<DbMeasurement>>(provider => new StorageRepository(_configuration["ConnectionString"]))
+        .AddScoped<IRepository<DbStatus>>(provider => new StorageRepository(_configuration["ConnectionString"]));
 
+      using (var serviceProvider = serviceCollection.BuildServiceProvider())
+      {
+        var databaseConsumer = serviceProvider.GetRequiredService<IKafkaConsumer>();
+        var storageService = serviceProvider.GetRequiredService<IStorageService>();
 
-      var servicePro = serviceProvider.BuildServiceProvider();
+        var callbacksDictionary = new Dictionary<string, Action<string>>();
 
-  
-      var databaseConsumer = new DatabaseConsumer();
-      var dataService = new DbSaverService(servicePro);
-      databaseConsumer.Listen(dataService.SaveData);
-
+        callbacksDictionary.Add("telemetry", storageService.StoreMeasurements);
+        callbacksDictionary.Add("status", storageService.StoreStatus);
+    
+        databaseConsumer.Listen(callbacksDictionary, new [] {"telemetry", "status"});
+      }
     }
   }
 }

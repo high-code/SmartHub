@@ -31,9 +31,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHub.SaverService", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHub.Domain", "src\Api\SmartHub.Domain\SmartHub.Domain.csproj", "{772391ED-433D-430B-BCAF-872BF443EDBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHub.BusinessLogic", "src\Api\SmartHub.BusinessLogic\SmartHub.BusinessLogic.csproj", "{22777EC6-96CF-4E09-911D-F7C47A02942B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHub.BusinessLogic", "src\Api\SmartHub.BusinessLogic\SmartHub.BusinessLogic.csproj", "{22777EC6-96CF-4E09-911D-F7C47A02942B}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CCE240E0-7273-4B16-A376-F9974A04ABF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consumers", "Consumers", "{A3E130E3-5C44-4D5F-9282-5A4567FBB058}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHub.KafkaConsumer", "src\KafkaConsumer\SmartHub.KafkaConsumer\SmartHub.KafkaConsumer.csproj", "{5C9011D7-305E-4E4F-B8F0-34679B2DF367}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +81,10 @@ Global
 		{CCE240E0-7273-4B16-A376-F9974A04ABF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCE240E0-7273-4B16-A376-F9974A04ABF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCE240E0-7273-4B16-A376-F9974A04ABF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C9011D7-305E-4E4F-B8F0-34679B2DF367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C9011D7-305E-4E4F-B8F0-34679B2DF367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C9011D7-305E-4E4F-B8F0-34679B2DF367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C9011D7-305E-4E4F-B8F0-34679B2DF367}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +104,8 @@ Global
 		{88FF1878-DB0C-49A6-B0F5-56DBCB6C21AD} = {F6A6490C-5E75-46B0-A2CD-E3F5EEEA12CB}
 		{772391ED-433D-430B-BCAF-872BF443EDBA} = {B957997A-7335-43EE-8BC2-A6A87FD60F93}
 		{22777EC6-96CF-4E09-911D-F7C47A02942B} = {B957997A-7335-43EE-8BC2-A6A87FD60F93}
+		{A3E130E3-5C44-4D5F-9282-5A4567FBB058} = {D52F3BA9-595B-4E4E-94A5-FFB89665B4DA}
+		{5C9011D7-305E-4E4F-B8F0-34679B2DF367} = {A3E130E3-5C44-4D5F-9282-5A4567FBB058}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE7104F7-C501-4991-816A-18A09A499913}

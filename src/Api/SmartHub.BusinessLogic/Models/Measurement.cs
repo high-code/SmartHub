@@ -1,13 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace SmartHub.BL.Models
+namespace SmartHub.BusinessLogic.Models
 {
-  public struct Measurement
+  public class Measurement
   {
-    public DateTime DateTime { get; set; }
+    public DateTime DtSent { get; set; }
 
-    public int Value { get; set; }
+    public double Value { get; set; }
+
+    public MeasurementType Type { get; set; }
+
   }
 }

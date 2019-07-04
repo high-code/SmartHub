@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using SmartHub.BL.Contracts;
-using SmartHub.BL.Models;
+using SmartHub.BusinessLogic.Contracts;
 using SmartHub.BusinessLogic.Models;
 using SmartHub.Models;
 
@@ -54,9 +53,9 @@ namespace SmartHub.Controllers
     [HttpGet("{id}/telemetry")]
     public IActionResult GetTelemetry(int id, DateTime? startFrom, DateTime? endTo)
     {
+      var telemetries = _deviceService.GetTelemetry(id, startFrom, endTo);
 
-
-      return Ok();
+      return Ok(telemetries);
     }
 
     [HttpPost("register")]

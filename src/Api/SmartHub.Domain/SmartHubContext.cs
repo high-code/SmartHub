@@ -10,6 +10,8 @@ namespace SmartHub.Domain
 
       public DbSet<Device> Devices { get; set; }
 
+      public DbSet<Measurement> Telemetries { get; set; }
+
 
     public SmartHubContext(DbContextOptions<SmartHubContext> options) : base(options) { }
 
@@ -17,6 +19,7 @@ namespace SmartHub.Domain
       {
         
         modelBuilder.ApplyConfiguration(new DeviceConfiguration());
+        modelBuilder.ApplyConfiguration(new MeasurementConfiguration());
         base.OnModelCreating(modelBuilder);
       }
     }

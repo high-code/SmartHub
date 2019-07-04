@@ -1,6 +1,4 @@
-using System;
-
-namespace SmartHub.BL.Models
+namespace SmartHub.BusinessLogic.Models
 {
   public class RegisterDeviceModel
   {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Confluent.Kafka;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +10,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using SmartHub.KafkaConsumer;
 using SmartHub.NotificationService.Hubs;
 
 namespace SmartHub.NotificationService
@@ -28,17 +31,25 @@ namespace SmartHub.NotificationService
       services.Configure<CookiePolicyOptions>(options =>
       {
               // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-              options.CheckConsentNeeded = context => true;
+        options.CheckConsentNeeded = context => true;
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
 
+      services.AddLogging();
       services.AddSignalR().AddRedis(
-        "redis:6379", options => options.Configuration.ClientName = "NotificationService");
-
+        Configuration["RedisURI"], options => options.Configuration.ClientName = "NotificationService");
+      services.AddHostedService<ConsumerHostedService>();
+      services.AddTransient<INotificationService, NotificationService>();
+      services.AddSingleton<IKafkaConsumer, Consumer>(i => new Consumer(i.GetRequiredService<ILogger<Consumer>>(),
+        new ConsumerConfig
+        {
+          BootstrapServers = Configuration["BrokerURI"],
+          GroupId = Configuration["KafkaConsumerGroupId"],
+          AutoOffsetReset = AutoOffsetReset.Earliest
+        }));
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
       if (env.IsDevelopment())
@@ -52,14 +63,25 @@ namespace SmartHub.NotificationService
         app.UseHsts();
       }
 
+      if (env.IsDevelopment())
+      {
+        app.UseCors(builder =>
+        {
+          builder.WithOrigins("https://localhost:44332")
+            .AllowAnyHeader()
+            .WithMethods("GET", "POST")
+            .AllowCredentials();
+        });
+      }
+
+
 
       app.UseSignalR(builder => builder.MapHub<TelemetryHub>("/telemetry"));
       
 
       app.UseHttpsRedirection();
       app.UseStaticFiles();
-      app.UseCookiePolicy();
-
+ 
       app.UseMvc();
     }
   }

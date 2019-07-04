@@ -11,9 +11,11 @@ namespace SmartHub.Edge.Models
   public class Telemetry
   {
 
+    public Guid DeviceId { get; set; }
+
     public TelemetryType Type { get; set; }
 
     public double Value { get; set; }
 
-}
+  }
 }

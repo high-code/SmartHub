@@ -11,10 +11,14 @@ namespace SmartHub.Domain.Concrete
 
     public IDeviceRepository Devices { get; set; }
 
+    public IMeasurementRepository Measurements { get; set; }
+
     public UnitOfWork(SmartHubContext context)
     {
       _context = context;
+      // Possible place to use Property Injection
       Devices = new DeviceRepository(_context);
+      Measurements = new MeasurementRepository(_context);
     }
 
 

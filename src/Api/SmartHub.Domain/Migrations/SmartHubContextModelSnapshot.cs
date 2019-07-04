@@ -34,7 +34,32 @@ namespace SmartHub.Domain.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasAlternateKey("DeviceId");
+
                     b.ToTable("devices");
+                });
+
+            modelBuilder.Entity("SmartHub.Domain.Entities.Measurement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnName("deviceid");
+
+                    b.Property<DateTime?>("DtSend")
+                        .HasColumnName("dtsend");
+
+                    b.Property<int>("Type")
+                        .HasColumnName("type");
+
+                    b.Property<double>("Value")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("measurements");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SmartHub.Edge.Configuration;
+using SmartHub.Edge.Contracts;
+using SmartHub.Edge.Services;
 
 namespace SmartHub.Edge
 {
@@ -24,6 +27,8 @@ namespace SmartHub.Edge
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+      services.AddScoped<INotificationService, TelemetryService>();
+      services.AddSingleton(typeof(KafkaConfiguration));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

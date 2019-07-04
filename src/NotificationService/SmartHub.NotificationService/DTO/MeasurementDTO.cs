@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SmartHub.NotificationService
+namespace SmartHub.NotificationService.DTO
 {
-  public class Telemetry
+  public class MeasurementDTO
   {
-
     public Guid DeviceId { get; set; }
+
+    public byte Type { get; set; }
+
+    public double Value { get; set; }
   }
 }

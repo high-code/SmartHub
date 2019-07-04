@@ -21,6 +21,23 @@ namespace SmartHub.Domain.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_devices", x => x.id);
+                    table.UniqueConstraint("AK_devices_DeviceId", x => x.DeviceId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "measurements",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    type = table.Column<int>(nullable: false),
+                    value = table.Column<double>(nullable: false),
+                    dtsend = table.Column<DateTime>(nullable: true),
+                    deviceid = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_measurements", x => x.id);
                 });
         }
 
@@ -28,6 +45,9 @@ namespace SmartHub.Domain.Migrations
         {
             migrationBuilder.DropTable(
                 name: "devices");
+
+            migrationBuilder.DropTable(
+                name: "measurements");
         }
     }
 }

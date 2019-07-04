@@ -6,12 +6,14 @@ import { Device } from '../models/device';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { Telemetry } from '../models/telemetry.model';
 @Injectable({
   providedIn: 'root'
 })
 export class DeviceService {
 
   devicesUrl = "device"
+  telemetryUrl = "telemetry";
   registerDeviceUrl = "register";
   baseUrl = "https://localhost:44319/api";
 
@@ -30,6 +32,11 @@ export class DeviceService {
        .pipe(
          tap(a => console.log(a))
        );
+  }
+
+  getTelemetry(id: number): Observable<Telemetry[]> {
+    const url = `${this.baseUrl}/${this.telemetryUrl}/${id}`;
+    return this.http.get<Telemetry[]>(url);
   }
 
   registerDevice(registerDevice : RegisterDevice) : Observable<DeviceDescription> {

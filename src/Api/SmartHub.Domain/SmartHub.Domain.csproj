@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190629122529_add telemetry.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.11">

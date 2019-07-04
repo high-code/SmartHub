@@ -1,6 +1,4 @@
-using System;
-
-namespace SmartHub.Models
+namespace SmartHub.Api.Models
 {
   public class DeviceDescription
   {
