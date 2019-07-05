@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import * as signalR from '@aspnet/signalr';
 import * as Chart from "chart.js";
 import { Telemetry } from '../models/telemetry.model';
+import { ConfigurationService } from '../services/configuration.service';
 
 @Component({
   selector: 'app-device-page',
@@ -29,14 +30,16 @@ export class DevicePageComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private deviceService: DeviceService,
-    private spinnerService: NgxSpinnerService) {
-    this.connection = new signalR.HubConnectionBuilder()
-      .withUrl("https://localhost:44335/telemetry")
-      .configureLogging(signalR.LogLevel.Debug)
-      .build();
+    private configurationService: ConfigurationService) {
+
+    if (this.configurationService.isLoaded) {
+      this.setupSignalRConnection(this.configurationService.configuration.notificationServiceUrl)
+    } else {
+      this.configurationService.configurationLoaded$.subscribe(conf => {
+        this.setupSignalRConnection(this.configurationService.configuration.notificationServiceUrl)
+      })
+    }
     this.measurements = [1];
-
-
   }
 
   ngOnInit() {
@@ -44,16 +47,23 @@ export class DevicePageComponent implements OnInit, AfterViewInit {
       switchMap((params: ParamMap) => this.deviceService.getDevice(+params.get('id')))
     ).subscribe(device => {
       this.device = device;
-      this.connection.start();
-        // .then(() => {
-        //   // this.connection.invoke("subscribe", this.device.deviceId)
-        //   // this.connection.on("sendMeasurement",(data) => {
-        //   //     this.receiveTelemetry(data);
-        //   // } )
-        // })
-        // .catch(error => console.log(error));
-    })
+    });
 
+    this.connection.start()
+      .then(() => {
+        this.connection.invoke("subscribe", this.device.deviceId)
+        this.connection.on("sendMeasurement", (data) => {
+          this.receiveTelemetry(data);
+        })
+      })
+      .catch(error => console.log(error));
+  }
+
+  setupSignalRConnection(baseUrl: string) {
+    this.connection = new signalR.HubConnectionBuilder()
+      .withUrl(`${baseUrl}/telemetry`)
+      .configureLogging(signalR.LogLevel.Debug)
+      .build();
   }
 
   ngAfterViewInit() {
@@ -94,16 +104,8 @@ export class DevicePageComponent implements OnInit, AfterViewInit {
           }
         }
       });
-
-
-     this.advance();
   }
 
-
-  advance() {
-
-  
-  }
 
   deleteDevice(id: string) {
     this.deviceService.deleteDevice(id)
@@ -116,19 +118,19 @@ export class DevicePageComponent implements OnInit, AfterViewInit {
 
 
   receiveTelemetry(data: Telemetry) {
-    
+
 
     this.values.push({ x: new Date(), y: data.value });
 
     requestAnimationFrame(() => {
-      if(this.values[0] != null ) {
+      if (this.values[0] != null) {
         this.chart.update();
       }
 
       this.chart.update();
     });
 
-    if(this.values.length > 10)
+    if (this.values.length > 10)
       this.values.shift();
 
 

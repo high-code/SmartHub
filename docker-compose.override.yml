@@ -31,8 +31,8 @@ services:
      - ASPNETCORE_ENVIRONMENT=Development
      - ASPNETCORE_URLS=https://+:443;http://+:80
      - ASPNETCORE_HTTPS_PORT=44332
-     - NotificationServiceUrl=http://smarthub.notificationservice
-     - SmartHubApiUrl=http://smarthub.api
+     - NotificationServiceUrl=https://localhost:44335
+     - SmartHubApiUrl=https://localhost:44319/api
     ports:
       - "44332:443"
       - "49581:80"

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DeviceDescription } from '../models/device-description';
 import { DeviceService } from '../services/device.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ConfigurationService } from '../services/configuration.service';
 
 @Component({
   selector: 'device-list',
@@ -13,10 +14,18 @@ export class DeviceListComponent implements OnInit {
   devicesList: DeviceDescription[];
 
   constructor(private deviceService: DeviceService,
-    private spinnerService: NgxSpinnerService) { }
+    private spinnerService: NgxSpinnerService,
+    private configurationService: ConfigurationService) { }
 
   ngOnInit() {
-    this.getDevices();
+
+    if(this.configurationService.isLoaded){
+      this.getDevices();
+    } else {
+      this.configurationService.configurationLoaded$.subscribe(() => {
+        this.getDevices();
+      })
+    }
   }
 
   getDevices() {
