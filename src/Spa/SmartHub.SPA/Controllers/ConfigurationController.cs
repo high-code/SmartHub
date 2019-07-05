@@ -8,20 +8,21 @@ using Microsoft.Extensions.Options;
 namespace SmartHub.SPA.Controllers
 {
   [Route("api/[controller]")]
-  public class SettingController : Controller
+  public class ConfigurationController : Controller
   {
 
     private readonly IOptionsSnapshot<AppSettings> _snapshot;
 
 
-    public SettingController(IOptionsSnapshot<AppSettings> snapshot)
+    public ConfigurationController(IOptionsSnapshot<AppSettings> snapshot)
     {
       _snapshot = snapshot;
     }
 
 
     [HttpGet]
-    public JsonResult GetSettings()
+    [Route("configuration")]
+    public JsonResult GetConfiguration()
     {
       return new JsonResult(_snapshot.Value);
     }
