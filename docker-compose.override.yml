@@ -46,7 +46,7 @@ services:
      - ASPNETCORE_HTTPS_PORT=44335
      - BrokerURI=kafka:9092
      - KafkaConsumerGroupId=notification-consumers
-     - RedisURI=redis:6379"
+     - RedisURI=redis:6379
     ports:
       - "44335:443"
       - "49583:80"
@@ -58,6 +58,20 @@ services:
      - BrokerURI=kafka:9092
      - ConnectionString=User ID=postgres;Password=admin;Server=postgres;Port=5432;Database=smarthub;Integrated Security=true; Pooling=true;
      - KafkaConsumerGroupId=storage-consumers
+  smarthub.identity:
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_URLS=https://+:443;http://+:80
+     - ASPNETCORE_HTTPS_PORT=44338
+    ports:
+     - "44338:443"
+     - "49585:80"
+    volumes:
+     - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+     - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+  redis:
+    ports:
+     - "6379:6379"
   postgres:
     environment:
       - POSTGRES_PASSWORD=admin

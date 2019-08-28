@@ -27,6 +27,11 @@ services:
     build:
       context: .
       dockerfile: src/Spa/SmartHub.SPA/Dockerfile
+  smarthub.identity:
+    image: ${DOCKER_REGISTRY-}smarthubidentity
+    build:
+      context: .
+      dockerfile: src/Identity/SmartHub.Identity/Dockerfile
   zookeeper:
     image: 'bitnami/zookeeper:latest'
     ports:
