@@ -7,6 +7,10 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=44319
       - ConnectionString=User ID=postgres;Password=admin;Server=postgres;Port=5432;Database=smarthub;Integrated Security=true; Pooling=true;
+      - Seq__ServerUrl=http://seq:5341
+      - Seq__ApiKey=1234567890
+      - Seq__MinimumLevel=Trace
+      - Seq__LevelOverride__Microsoft=Warning
     ports:
       - "49580:80"
       - "44319:443"
@@ -31,8 +35,8 @@ services:
      - ASPNETCORE_ENVIRONMENT=Development
      - ASPNETCORE_URLS=https://+:443;http://+:80
      - ASPNETCORE_HTTPS_PORT=44332
-     - NotificationServiceUrl=http://smarthub.notificationservice
-     - SmartHubApiUrl=http://smarthub.api
+     - NotificationServiceUrl=https://localhost:44335
+     - SmartHubApiUrl=https://localhost:44319/api
     ports:
       - "44332:443"
       - "49581:80"
@@ -46,7 +50,7 @@ services:
      - ASPNETCORE_HTTPS_PORT=44335
      - BrokerURI=kafka:9092
      - KafkaConsumerGroupId=notification-consumers
-     - RedisURI=redis:6379"
+     - RedisURI=redis:6379
     ports:
       - "44335:443"
       - "49583:80"
@@ -58,6 +62,20 @@ services:
      - BrokerURI=kafka:9092
      - ConnectionString=User ID=postgres;Password=admin;Server=postgres;Port=5432;Database=smarthub;Integrated Security=true; Pooling=true;
      - KafkaConsumerGroupId=storage-consumers
+  smarthub.identity:
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+     - ASPNETCORE_URLS=https://+:443;http://+:80
+     - ASPNETCORE_HTTPS_PORT=44338
+    ports:
+     - "44338:443"
+     - "49585:80"
+    volumes:
+     - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+     - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+  redis:
+    ports:
+     - "6379:6379"
   postgres:
     environment:
       - POSTGRES_PASSWORD=admin
@@ -65,6 +83,16 @@ services:
       - "5432:5432"
     volumes:
       - postgres_database:/var/lib/postgresql/data:Z
+  seq:
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "80:80"
+      - "5341:5341"
+    volumes:
+      - seq_logs:/data
 volumes:
   postgres_database:
+    external: true
+  seq_logs:
     external: true

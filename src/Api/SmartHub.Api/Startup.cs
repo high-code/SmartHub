@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using SmartHub.BL.Services;
 using SmartHub.BusinessLogic.Contracts;
 using SmartHub.Domain;
@@ -27,6 +28,8 @@ namespace SmartHub.Api
 
       services.AddEntityFrameworkNpgsql().AddDbContext<SmartHubContext>(opt =>
         opt.UseNpgsql(Configuration["ConnectionString"]));
+
+      services.AddLogging(loggingBuilder => { loggingBuilder.AddSeq(Configuration.GetSection("Seq")); });
 
       services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
       {

@@ -7,31 +7,33 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Telemetry } from '../models/telemetry.model';
+import { ConfigurationService } from './configuration.service';
 @Injectable({
   providedIn: 'root'
 })
 export class DeviceService {
 
-  devicesUrl = "device"
-  telemetryUrl = "telemetry";
-  registerDeviceUrl = "register";
-  baseUrl = "https://localhost:44319/api";
+  baseUrl: string = "";
+  devicesUrl: string = "device"
+  telemetryUrl: string = "telemetry";
+  registerDeviceUrl: string = "register";
 
-  constructor(private http: HttpClient) 
-  {
-     
+  constructor(private http: HttpClient, private configurationService: ConfigurationService) {
+    this.configurationService.configurationLoaded$.subscribe((conf) => {
+      this.baseUrl = this.configurationService.configuration.smartHubApiUrl;
+    })
   }
 
-  getDevicesDescs() : Observable<DeviceDescription[]> {
-     return this.http.get<DeviceDescription[]>(`${this.baseUrl}/${this.devicesUrl}`);
+  getDevicesDescs(): Observable<DeviceDescription[]> {
+    return this.http.get<DeviceDescription[]>(`${this.baseUrl}/${this.devicesUrl}`);
   }
 
-  getDevice(id: number) : Observable<Device> {
+  getDevice(id: number): Observable<Device> {
     const url = `${this.baseUrl}/${this.devicesUrl}/${id}`;
     return this.http.get<Device>(url)
-       .pipe(
-         tap(a => console.log(a))
-       );
+      .pipe(
+        tap(a => console.log(a))
+      );
   }
 
   getTelemetry(id: number): Observable<Telemetry[]> {
@@ -39,15 +41,14 @@ export class DeviceService {
     return this.http.get<Telemetry[]>(url);
   }
 
-  registerDevice(registerDevice : RegisterDevice) : Observable<DeviceDescription> {
-
-    let fullUrl = `${this.baseUrl}/${this.devicesUrl}/${this.registerDeviceUrl}`;
+  registerDevice(registerDevice: RegisterDevice): Observable<DeviceDescription> {
+    const fullUrl = `${this.baseUrl}/${this.devicesUrl}/${this.registerDeviceUrl}`;
     return this.http.post<DeviceDescription>(fullUrl, registerDevice);
   }
 
 
   deleteDevice(id: string) {
-    let fullUrl = `${this.baseUrl}/${this.devicesUrl}/${id}`
+    const fullUrl = `${this.baseUrl}/${this.devicesUrl}/${id}`
     return this.http.delete(fullUrl);
   }
 

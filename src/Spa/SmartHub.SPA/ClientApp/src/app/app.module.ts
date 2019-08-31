@@ -17,6 +17,8 @@ import { NotificationDirective } from './notification-box/notification-directive
 import { ToastrModule } from 'ngx-toastr';
 import { LoginBoardComponent } from './login-board/login-board.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ConfigurationService } from './services/configuration.service';
+import { StorageService } from './services/storage.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ToastrModule.forRoot(),
     NgxSpinnerModule
   ],
-  providers: [],
+  providers: [ConfigurationService, StorageService],
   entryComponents: [NotificationComponent],
   bootstrap: [AppComponent]
 })
