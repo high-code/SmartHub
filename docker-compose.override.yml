@@ -7,6 +7,10 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=44319
       - ConnectionString=User ID=postgres;Password=admin;Server=postgres;Port=5432;Database=smarthub;Integrated Security=true; Pooling=true;
+      - Seq__ServerUrl=http://seq:5341
+      - Seq__ApiKey=1234567890
+      - Seq__MinimumLevel=Trace
+      - Seq__LevelOverride__Microsoft=Warning
     ports:
       - "49580:80"
       - "44319:443"
@@ -79,6 +83,16 @@ services:
       - "5432:5432"
     volumes:
       - postgres_database:/var/lib/postgresql/data:Z
+  seq:
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "80:80"
+      - "5341:5341"
+    volumes:
+      - seq_logs:/data
 volumes:
   postgres_database:
+    external: true
+  seq_logs:
     external: true

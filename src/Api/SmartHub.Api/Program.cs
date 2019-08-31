@@ -18,7 +18,11 @@ namespace SmartHub.Api
     }
 
     public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-        WebHost.CreateDefaultBuilder(args)
-            .UseStartup<Startup>();
+      WebHost.CreateDefaultBuilder(args)
+        .UseStartup<Startup>()
+        .ConfigureLogging(builder =>
+        {
+          builder.AddConsole();
+        });
   }
 }

@@ -51,3 +51,5 @@ services:
     image: 'postgres:latest'
   redis:
     image: 'redis:latest'
+  seq:
+    image: 'datalust/seq:latest'
