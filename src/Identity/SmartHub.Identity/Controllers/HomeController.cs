@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -9,7 +8,6 @@ using SmartHub.Identity.Models;
 
 namespace SmartHub.Identity.Controllers
 {
-    [SecurityHeaders]
     [AllowAnonymous]
     public class HomeController : Controller
     {
