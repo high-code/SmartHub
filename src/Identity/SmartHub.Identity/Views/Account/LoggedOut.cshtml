@@ -1,0 +1,27 @@
+﻿@using SmartHub.Identity.Models
+@model LoggedOutViewModel
+@{
+    ViewData["signed-out"] = true;
+}
+
+@if (Model.PostLogoutRedirectUri != null)
+{
+    <div>
+        Click <a id="postLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">here</a> to return to the <span>@Model.ClientName</span> application.
+    </div>
+}
+
+@if (Model.SignoutIframeUrl != null)
+{
+    <iframe width="0" height="0" src="@Model.SignoutIframeUrl"></iframe>
+}
+
+
+@section scripts {
+    
+    @if (Model.AutomaticRedirectAfterSignout)
+    {
+        <script src="~/js/signout-redirect.js"></script>
+    }
+
+}

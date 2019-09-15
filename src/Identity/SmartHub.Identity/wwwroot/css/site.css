@@ -1,56 +1,35 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿body {
+  margin-top: 65px;
 }
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
+.navbar-header {
   position: relative;
-  min-height: 100%;
+  top: -4px;
+}
+.navbar-brand > .icon-banner {
+  position: relative;
+  top: -2px;
+  display: inline;
+}
+.icon {
+  position: relative;
+  top: -10px;
+}
+.logged-out iframe {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+
+.login-board {
+    position: absolute;
+    width: 35%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  line-height: 60px; /* Vertically center the text there */
+
+.login-board-caption {
+    text-align: center;
+    font-size: 40px;
 }

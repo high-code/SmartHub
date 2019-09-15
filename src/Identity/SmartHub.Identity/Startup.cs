@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,15 +18,28 @@ namespace SmartHub.Identity
 
     public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
       services.Configure<CookiePolicyOptions>(options =>
       {
-              // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-              options.CheckConsentNeeded = context => true;
+        options.CheckConsentNeeded = context => true;
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
+
+      services.AddIdentityServer()
+        .AddInMemoryClients(Config.GetClients())
+        .AddInMemoryApiResources(Config.GetAPis())
+        .AddInMemoryIdentityResources(Config.GetIdentityResources())
+        .AddTestUsers(Config.GetTestUsers())
+        .AddDeveloperSigningCredential();
+
+
+      services.AddCors(o => o.AddPolicy("SpaAuthCors", builder =>
+      {
+        builder.AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader();
+      }));
 
 
       services.AddMvc();
@@ -38,6 +48,8 @@ namespace SmartHub.Identity
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
+
+      app.UseStaticFiles();
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
@@ -49,11 +61,12 @@ namespace SmartHub.Identity
         app.UseHsts();
       }
 
+      app.UseCors("SpaAuthCors");
       app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseCookiePolicy();
-
-      app.UseMvc();
+      app.UseIdentityServer();
+      app.UseMvcWithDefaultRoute();
     }
   }
 }
