@@ -3,16 +3,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { DeviceListComponent } from './device-list/device-list.component';
 import { RegisterDeviceComponent } from './register-device/register-device.component';
 import { DevicePageComponent } from './device-page/device-page.component';
-import { LoginBoardComponent } from './login-board/login-board.component';
+import { AuthGuard } from './services/auth-guard.service';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { SmarthubProfileComponent } from './smarthub-profile/smarthub-profile.component';
 
 const routes: Routes = [
-  { path: "", redirectTo: "devices", pathMatch: "full"},
-  { path: "devices", component: DeviceListComponent, pathMatch: "full"},
-  { path: "registerDevice", component: RegisterDeviceComponent, pathMatch: "full"},
-  { path: "devicePage/:id", component: DevicePageComponent},
-  { path: "login", component: LoginBoardComponent }
+  { path: "", redirectTo: "devices", pathMatch: "full", canActivate: [AuthGuard]},
+  { path: "devices", component: DeviceListComponent, pathMatch: "full", canActivate : [AuthGuard]},
+  { path: "registerDevice", component: RegisterDeviceComponent, pathMatch: "full", canActivate : [AuthGuard]},
+  { path: "devicePage/:id", component: DevicePageComponent, canActivate : [AuthGuard]},
+  { path: "unauthorized", component: UnauthorizedComponent},
+  { path: "profile", component: SmarthubProfileComponent, canActivate : [AuthGuard]}
 ];
-
+ 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

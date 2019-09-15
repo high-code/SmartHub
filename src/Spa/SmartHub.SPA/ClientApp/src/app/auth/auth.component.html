@@ -1,0 +1,13 @@
+<button class="btn btn-primary" *ngIf="!(isLoggedIn$ | async)" (click)="login()">
+   Login
+</button>
+
+<div ngbDropdown  class="d-inline-block" *ngIf="isLoggedIn$ | async">
+  <a class="nav-link username" style="cursor: pointer" ngbDropdownToggle id="authDropdown">
+    {{userName | async}}
+  </a>
+  <div ngbDropdownMenu aria-labelledby="authDropdown" class="dropdown-menu">
+    <button ngbDropdownItem [routerLink]="['/profile']"> My profile</button>
+    <button ngbDropdownItem (click)="logout()">Logout</button>
+  </div>
+</div>
