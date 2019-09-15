@@ -37,7 +37,7 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consumers", "Consumers", "{A3E130E3-5C44-4D5F-9282-5A4567FBB058}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartHub.KafkaConsumer", "src\KafkaConsumer\SmartHub.KafkaConsumer\SmartHub.KafkaConsumer.csproj", "{5C9011D7-305E-4E4F-B8F0-34679B2DF367}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHub.KafkaConsumer", "src\KafkaConsumer\SmartHub.KafkaConsumer\SmartHub.KafkaConsumer.csproj", "{5C9011D7-305E-4E4F-B8F0-34679B2DF367}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
