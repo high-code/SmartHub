@@ -49,14 +49,7 @@ export class DevicePageComponent implements OnInit, AfterViewInit {
       this.device = device;
     });
 
-    this.connection.start()
-      .then(() => {
-        this.connection.invoke("subscribe", this.device.deviceId)
-        this.connection.on("sendMeasurement", (data) => {
-          this.receiveTelemetry(data);
-        })
-      })
-      .catch(error => console.log(error));
+    
   }
 
   setupSignalRConnection(baseUrl: string) {
@@ -64,6 +57,15 @@ export class DevicePageComponent implements OnInit, AfterViewInit {
       .withUrl(`${baseUrl}/telemetry`)
       .configureLogging(signalR.LogLevel.Debug)
       .build();
+
+      this.connection.start()
+      .then(() => {
+        this.connection.invoke("subscribe", this.device.deviceId)
+        this.connection.on("sendMeasurement", (data) => {
+          this.receiveTelemetry(data);
+        })
+      })
+      .catch(error => console.log(error));
   }
 
   ngAfterViewInit() {
