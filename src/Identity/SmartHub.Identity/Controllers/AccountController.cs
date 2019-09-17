@@ -98,7 +98,7 @@ namespace SmartHub.Identity.Controllers
 
       if (User?.Identity.IsAuthenticated == true)
       {
-        await HttpContext.SignOutAsync();
+        await _signInManager.SignOutAsync();
       }
 
       return View("loggedOut", vm);
