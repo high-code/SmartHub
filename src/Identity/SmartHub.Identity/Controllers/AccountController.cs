@@ -4,7 +4,9 @@ using IdentityServer4.Services;
 using IdentityServer4.Test;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SmartHub.Identity.Identity;
 using SmartHub.Identity.Models;
 
 namespace SmartHub.Identity.Controllers
@@ -13,11 +15,18 @@ namespace SmartHub.Identity.Controllers
   {
     private readonly IIdentityServerInteractionService _identityServerInteractionService;
     private readonly TestUserStore _users;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
+
     public AccountController(IIdentityServerInteractionService identityServerInteractionService,
+    UserManager<ApplicationUser> userManager,
+    SignInManager<ApplicationUser> signInManager,
     TestUserStore users = null)
     {
       _identityServerInteractionService = identityServerInteractionService;
       _users = users ?? new TestUserStore(Config.GetTestUsers());
+      _userManager = userManager;
+      _signInManager = signInManager;
     }
 
     public IActionResult Login(string returnUrl)
@@ -33,17 +42,10 @@ namespace SmartHub.Identity.Controllers
 
       if (ModelState.IsValid)
       {
-        if(_users.ValidateCredentials(viewModel.UserName, viewModel.Password))
+        var signInResult = await _signInManager.PasswordSignInAsync(viewModel.UserName, viewModel.Password, true, false);
+        
+        if(signInResult.Succeeded)
         {
-          var authProperties = new AuthenticationProperties
-          {
-            IsPersistent = true,
-            ExpiresUtc = DateTimeOffset.UtcNow.Add(TimeSpan.FromDays(1))
-          };
-
-          var user = _users.FindByUsername(viewModel.UserName);
-
-          await HttpContext.SignInAsync(user.SubjectId, user.Username, authProperties);
 
           if (context != null)
           {

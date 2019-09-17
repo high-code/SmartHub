@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SmartHub.Identity.Context;
+using SmartHub.Identity.Identity;
 
 namespace SmartHub.Identity
 {
@@ -26,14 +30,25 @@ namespace SmartHub.Identity
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
 
+      services.AddEntityFrameworkNpgsql().AddDbContext<SmartHubIdentityDbContext>(o =>
+      {
+        o.UseNpgsql(Configuration.GetConnectionString("Default"));
+      });
+
+      // add identity
+      services.AddIdentity<ApplicationUser,IdentityRole>()
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<SmartHubIdentityDbContext>()
+        .AddDefaultTokenProviders();
+
       services.AddIdentityServer()
         .AddInMemoryClients(Config.GetClients())
         .AddInMemoryApiResources(Config.GetAPis())
         .AddInMemoryIdentityResources(Config.GetIdentityResources())
-        .AddTestUsers(Config.GetTestUsers())
-        .AddDeveloperSigningCredential();
+        .AddDeveloperSigningCredential()
+        .AddAspNetIdentity<ApplicationUser>();
 
-
+        
       services.AddCors(o => o.AddPolicy("SpaAuthCors", builder =>
       {
         builder.AllowAnyOrigin()
@@ -46,7 +61,7 @@ namespace SmartHub.Identity
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager)
     {
 
       app.UseStaticFiles();
@@ -61,6 +76,13 @@ namespace SmartHub.Identity
         app.UseHsts();
       }
 
+      // seed with default user
+      if (env.IsDevelopment())
+      {
+        ApplicationDbInitializer.SeedUsers(userManager);
+      }
+
+      app.UseAuthentication();
       app.UseCors("SpaAuthCors");
       app.UseHttpsRedirection();
       app.UseStaticFiles();
