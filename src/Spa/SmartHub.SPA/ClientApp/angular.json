@@ -157,5 +157,10 @@
       }
     }
   },
-  "defaultProject": "SmartHub.SPA"
+  "defaultProject": "SmartHub.SPA",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

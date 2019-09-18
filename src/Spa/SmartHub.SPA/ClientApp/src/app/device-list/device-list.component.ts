@@ -7,7 +7,7 @@ import { ConfigurationService } from '../services/configuration.service';
 @Component({
   selector: 'device-list',
   templateUrl: './device-list.component.html',
-  styleUrls: ['./device-list.component.less']
+  styleUrls: ['./device-list.component.scss']
 })
 export class DeviceListComponent implements OnInit {
 
