@@ -1,9 +1,8 @@
-using System.Runtime.InteropServices.ComTypes;
 using Microsoft.EntityFrameworkCore;
-using SmartHub.Domain.Configurations;
-using SmartHub.Domain.Entities;
+using SmartHub.Infrastructure.Configurations;
+using SmartHub.Infrastructure.Entities;
 
-namespace SmartHub.Domain
+namespace SmartHub.Infrastructure
 {
     public class SmartHubContext : DbContext
     {

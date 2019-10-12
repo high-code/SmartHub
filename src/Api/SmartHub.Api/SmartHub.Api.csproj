@@ -25,11 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmartHub.BusinessLogic\SmartHub.BusinessLogic.csproj" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\SmartHub.BusinessLogic\SmartHub.BusinessLogic.csproj" />
+    <ProjectReference Include="..\SmartHub.Infrastructure\SmartHub.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

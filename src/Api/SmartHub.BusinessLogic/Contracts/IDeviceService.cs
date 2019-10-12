@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using SmartHub.BusinessLogic.Models;
-using SmartHub.Domain.Entities;
 using Device = SmartHub.BusinessLogic.Models.Device;
 using Measurement = SmartHub.BusinessLogic.Models.Measurement;
 

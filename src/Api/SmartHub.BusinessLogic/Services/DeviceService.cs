@@ -1,17 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using SmartHub.BL.Converters;
-using SmartHub.BL.Helpers;
 using SmartHub.BusinessLogic.Contracts;
-using SmartHub.BusinessLogic.Models;
-using SmartHub.Domain.Contracts;
-using SmartHub.Domain.Entities;
+using SmartHub.Infrastructure.Contracts;
 using Device = SmartHub.BusinessLogic.Models.Device;
 using Measurement = SmartHub.BusinessLogic.Models.Measurement;
 
-namespace SmartHub.BL.Services
+namespace SmartHub.BusinessLogic.Services
 {
   public class DeviceService : IDeviceService
   {
@@ -34,7 +30,7 @@ namespace SmartHub.BL.Services
     public void RegisterDevice(string name, string description)
     {
 
-      var device = new Domain.Entities.Device
+      var device = new Infrastructure.Entities.Device
       {
         Description = description,
         Name = name,
@@ -95,7 +91,7 @@ namespace SmartHub.BL.Services
 
     public void DeleteDevice(int deviceId)
     {
-      _unitOfWork.Devices.Remove(new Domain.Entities.Device { Id = deviceId});
+      _unitOfWork.Devices.Remove(new Infrastructure.Entities.Device { Id = deviceId});
       _unitOfWork.Commit();
     }
   }

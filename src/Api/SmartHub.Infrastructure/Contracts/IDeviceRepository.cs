@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using SmartHub.Domain.Entities;
+using SmartHub.Infrastructure.Entities;
 
-namespace SmartHub.Domain.Contracts
+namespace SmartHub.Infrastructure.Contracts
 {
   public interface IDeviceRepository : IRepository<Device>
   {

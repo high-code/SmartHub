@@ -7,9 +7,9 @@ namespace SmartHub.BL.Converters
 {
   public static class BlToDomainConverter
   {
-    public static Domain.Entities.Device ToDomainDeviceModel(Device device)
+    public static Infrastructure.Entities.Device ToDomainDeviceModel(Device device)
     {
-      return new Domain.Entities.Device
+      return new Infrastructure.Entities.Device
       {
         Name = device.Name,
       };

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmartHub.Domain\SmartHub.Infrastructure.csproj" />
+    <ProjectReference Include="..\SmartHub.Infrastructure\SmartHub.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

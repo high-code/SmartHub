@@ -1,6 +1,6 @@
 using System;
 
-namespace SmartHub.Domain.Entities
+namespace SmartHub.Infrastructure.Entities
 {
   public class Device
   {

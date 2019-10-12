@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SmartHub.BL.Services;
 using SmartHub.BusinessLogic.Contracts;
-using SmartHub.Domain;
-using SmartHub.Domain.Concrete;
-using SmartHub.Domain.Contracts;
+using SmartHub.BusinessLogic.Services;
+using SmartHub.Infrastructure;
+using SmartHub.Infrastructure.Concrete;
+using SmartHub.Infrastructure.Contracts;
 
 namespace SmartHub.Api
 {

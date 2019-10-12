@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
+using SmartHub.Domain;
 using SmartHub.Domain.Contracts;
-using SmartHub.Domain.Entities;
+using SmartHub.Infrastructure.Contracts;
+using SmartHub.Infrastructure.Entities;
 
-namespace SmartHub.Domain.Concrete
+namespace SmartHub.Infrastructure.Concrete
 {
   public class DeviceRepository : Repository<Device>, IDeviceRepository
   {

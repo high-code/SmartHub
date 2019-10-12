@@ -1,10 +1,8 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SmartHub.Infrastructure.Entities;
 
-using SmartHub.Domain.Entities;
-
-namespace SmartHub.Domain.Configurations
+namespace SmartHub.Infrastructure.Configurations
 {
   public class DeviceConfiguration : IEntityTypeConfiguration<Device>
   {

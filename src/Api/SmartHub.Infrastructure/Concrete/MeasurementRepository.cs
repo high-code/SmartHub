@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using SmartHub.Domain.Contracts;
-using SmartHub.Domain.Entities;
+using SmartHub.Infrastructure.Entities;
 
-namespace SmartHub.Domain.Concrete
+namespace SmartHub.Infrastructure.Concrete
 {
   public class MeasurementRepository : Repository<Measurement>, IMeasurementRepository
   {

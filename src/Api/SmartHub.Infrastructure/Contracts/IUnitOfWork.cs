@@ -1,6 +1,7 @@
 using System;
+using SmartHub.Domain.Contracts;
 
-namespace SmartHub.Domain.Contracts
+namespace SmartHub.Infrastructure.Contracts
 {
   public interface IUnitOfWork : IDisposable
   {

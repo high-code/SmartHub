@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
-namespace SmartHub.Domain.Contracts
+namespace SmartHub.Infrastructure.Contracts
 {
   public interface IRepository<TEntity> where TEntity : class
   {

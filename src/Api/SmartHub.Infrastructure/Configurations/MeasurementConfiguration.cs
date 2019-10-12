@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SmartHub.Domain.Entities;
+using SmartHub.Infrastructure.Entities;
 
-namespace SmartHub.Domain.Configurations
+namespace SmartHub.Infrastructure.Configurations
 {
   public class MeasurementConfiguration : IEntityTypeConfiguration<Measurement>
   {

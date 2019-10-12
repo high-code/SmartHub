@@ -6,8 +6,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartHub.Domain;
+using SmartHub.Infrastructure;
 
-namespace SmartHub.Domain.Migrations
+namespace SmartHub.Infrastructure.Migrations
 {
     [DbContext(typeof(SmartHubContext))]
     [Migration("20190629130745_Initial")]
