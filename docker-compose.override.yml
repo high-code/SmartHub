@@ -37,6 +37,7 @@ services:
      - ASPNETCORE_HTTPS_PORT=44332
      - NotificationServiceUrl=https://localhost:44335
      - SmartHubApiUrl=https://localhost:44319/api
+     - IdentityUrl=https://localhost:44338
     ports:
       - "44332:443"
       - "49581:80"

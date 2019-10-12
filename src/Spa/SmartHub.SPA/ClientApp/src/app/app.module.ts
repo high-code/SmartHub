@@ -23,6 +23,8 @@ import { AuthGuard } from './services/auth-guard.service';
 import { AuthComponent } from './auth/auth.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SmarthubProfileComponent } from './smarthub-profile/smarthub-profile.component';
+import { RegisterComponent } from './register/register.component';
+import { PasswordNotMatchValidatorDirective } from './validators/password-matches.directive';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,10 @@ import { SmarthubProfileComponent } from './smarthub-profile/smarthub-profile.co
     NotificationDirective,
     UnauthorizedComponent,
     AuthComponent,
-    SmarthubProfileComponent
+    SmarthubProfileComponent,
+    RegisterComponent,
+    PasswordNotMatchValidatorDirective
+
   ],
   imports: [
     BrowserModule,
@@ -49,7 +54,7 @@ import { SmarthubProfileComponent } from './smarthub-profile/smarthub-profile.co
     NgxSpinnerModule,
     NgbModule
   ],
-  providers: [ConfigurationService, StorageService, AuthGuard],
+  providers: [ConfigurationService, StorageService, AuthGuard, PasswordNotMatchValidatorDirective],
   entryComponents: [NotificationComponent],
   bootstrap: [AppComponent]
 })
