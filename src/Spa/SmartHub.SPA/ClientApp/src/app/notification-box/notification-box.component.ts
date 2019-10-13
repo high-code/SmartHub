@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'notification-box',
   templateUrl: './notification-box.component.html',
-  styleUrls: ['./notification-box.component.less']
+  styleUrls: ['./notification-box.component.scss']
 })
 export class NotificationBoxComponent implements OnInit {
   

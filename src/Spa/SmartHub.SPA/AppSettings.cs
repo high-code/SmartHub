@@ -11,5 +11,7 @@ namespace SmartHub.SPA
     public string NotificationServiceUrl { get; set; }
 
     public string SmartHubApiUrl { get; set; }
+
+    public string IdentityUrl { get; set; }
   }
 }

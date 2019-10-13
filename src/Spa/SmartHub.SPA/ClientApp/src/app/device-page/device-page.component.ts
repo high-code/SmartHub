@@ -13,7 +13,7 @@ import { ConfigurationService } from '../services/configuration.service';
 @Component({
   selector: 'app-device-page',
   templateUrl: './device-page.component.html',
-  styleUrls: ['./device-page.component.less']
+  styleUrls: ['./device-page.component.scss']
 })
 export class DevicePageComponent implements OnInit, AfterViewInit {
 

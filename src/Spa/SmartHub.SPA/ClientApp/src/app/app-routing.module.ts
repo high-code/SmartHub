@@ -6,6 +6,7 @@ import { DevicePageComponent } from './device-page/device-page.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { SmarthubProfileComponent } from './smarthub-profile/smarthub-profile.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: "", redirectTo: "devices", pathMatch: "full", canActivate: [AuthGuard]},
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: "registerDevice", component: RegisterDeviceComponent, pathMatch: "full", canActivate : [AuthGuard]},
   { path: "devicePage/:id", component: DevicePageComponent, canActivate : [AuthGuard]},
   { path: "unauthorized", component: UnauthorizedComponent},
-  { path: "profile", component: SmarthubProfileComponent, canActivate : [AuthGuard]}
+  { path: "profile", component: SmarthubProfileComponent, canActivate : [AuthGuard]},
+  { path: "register", component: RegisterComponent}
 ];
  
 @NgModule({
