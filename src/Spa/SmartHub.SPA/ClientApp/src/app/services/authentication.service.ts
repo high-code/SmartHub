@@ -10,7 +10,7 @@ const settings: any = {
   redirect_uri: "https://localhost:44332/auth.html",
   response_type: 'id_token token',
   scope: "openid profile smarthub",
-  silent_redirect_uri: 'http://localhost:44332/silent-renew.html',
+  silent_redirect_uri: 'https://localhost:44332/silent-renew.html',
   automaticSilentRenew: true,
   accessTokenExpiringNotificationTime: 4,
 

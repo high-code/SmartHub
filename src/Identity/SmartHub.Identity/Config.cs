@@ -49,7 +49,11 @@ namespace SmartHub.Identity
           ClientName = "SmartHub spa client",
           AllowAccessTokensViaBrowser = true,
           AllowedGrantTypes = GrantTypes.Implicit,
-          RedirectUris = { "https://localhost:44332/auth.html" }, // change to configuration setting,
+          RedirectUris =
+          {
+            "https://localhost:44332/auth.html",
+            "https://localhost:44332/silent-renew.html"
+          }, // change to configuration setting,
           RequireConsent = false,
           PostLogoutRedirectUris = {$"https://localhost:44332"},
           AllowedScopes =
