@@ -16,7 +16,14 @@ namespace SmartHub.Identity
     {
       return new List<ApiResource>()
       {
-        new ApiResource("smarthub", "Smarthub API"),
+        new ApiResource("smarthub", "Smarthub API")
+        {
+          UserClaims =
+          {
+            JwtClaimTypes.Name,
+            JwtClaimTypes.Subject
+          }
+        },
         new ApiResource("smarthub.signalr", "Smarthub signalR service")
       };
     }
@@ -42,14 +49,18 @@ namespace SmartHub.Identity
           ClientName = "SmartHub spa client",
           AllowAccessTokensViaBrowser = true,
           AllowedGrantTypes = GrantTypes.Implicit,
-          RedirectUris = { "https://localhost:44332/auth.html" }, // change to configuration setting,
+          RedirectUris =
+          {
+            "https://localhost:44332/auth.html",
+            "https://localhost:44332/silent-renew.html"
+          }, // change to configuration setting,
           RequireConsent = false,
           PostLogoutRedirectUris = {$"https://localhost:44332"},
           AllowedScopes =
           {
             IdentityServerConstants.StandardScopes.OpenId,
             IdentityServerConstants.StandardScopes.Profile,
-            //"smarthub",
+            "smarthub"
             //"smarthub.signalr"
           },
           ClientSecrets =  { new Secret("secret".Sha256())},

@@ -1,26 +1,27 @@
-using System.Runtime.InteropServices.ComTypes;
 using Microsoft.EntityFrameworkCore;
-using SmartHub.Domain.Configurations;
-using SmartHub.Domain.Entities;
+using SmartHub.Identity.Helpers;
+using SmartHub.Infrastructure.Configurations;
+using SmartHub.Infrastructure.Entities;
 
-namespace SmartHub.Domain
+namespace SmartHub.Infrastructure
 {
-    public class SmartHubContext : DbContext
-    {
+  public class SmartHubContext : DbContext
+  {
 
-      public DbSet<Device> Devices { get; set; }
+    public DbSet<Device> Devices { get; set; }
 
-      public DbSet<Measurement> Telemetries { get; set; }
+    public DbSet<Measurement> Telemetries { get; set; }
 
 
     public SmartHubContext(DbContextOptions<SmartHubContext> options) : base(options) { }
 
-      protected override void OnModelCreating(ModelBuilder modelBuilder)
-      {
-        
-        modelBuilder.ApplyConfiguration(new DeviceConfiguration());
-        modelBuilder.ApplyConfiguration(new MeasurementConfiguration());
-        base.OnModelCreating(modelBuilder);
-      }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+      base.OnModelCreating(modelBuilder);
+      modelBuilder.ApplyConfiguration(new DeviceConfiguration());
+      modelBuilder.ApplyConfiguration(new MeasurementConfiguration());
+
+      modelBuilder.ToSnakeCaseNamingConventions();
     }
+  }
 }

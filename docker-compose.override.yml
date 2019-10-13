@@ -7,6 +7,7 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_HTTPS_PORT=44319
       - ConnectionString=User ID=postgres;Password=admin;Server=postgres;Port=5432;Database=smarthub;Integrated Security=true; Pooling=true;
+      - AuthorityUrl=devenv
       - Seq__ServerUrl=http://seq:5341
       - Seq__ApiKey=1234567890
       - Seq__MinimumLevel=Trace

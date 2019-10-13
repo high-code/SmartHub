@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SmartHub.BL.Services;
+using Microsoft.IdentityModel.Tokens;
 using SmartHub.BusinessLogic.Contracts;
-using SmartHub.Domain;
-using SmartHub.Domain.Concrete;
-using SmartHub.Domain.Contracts;
+using SmartHub.BusinessLogic.Services;
+using SmartHub.Infrastructure;
+using SmartHub.Infrastructure.Concrete;
+using SmartHub.Infrastructure.Contracts;
 
 namespace SmartHub.Api
 {
@@ -37,7 +40,26 @@ namespace SmartHub.Api
                .AllowAnyMethod()
                .AllowAnyHeader();
       }));
+      
+      services.AddAuthentication(options =>
+          {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+          })
+        .AddJwtBearer(options =>
+        {
+          options.Authority = Configuration["AuthorityUrl"];
+          options.MetadataAddress = "http://smarthub.identity/.well-known/openid-configuration";
+          options.RequireHttpsMetadata = false;
+          options.Audience = "smarthub";
+          options.IncludeErrorDetails = true;
+          options.TokenValidationParameters = new TokenValidationParameters()
+          {
+            NameClaimType = ClaimTypes.NameIdentifier
+          };
 
+        });
+      
       services.AddScoped<IUnitOfWork, UnitOfWork>();
       services.AddScoped<IDeviceService, DeviceService>();
 
@@ -46,8 +68,8 @@ namespace SmartHub.Api
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
-
-
+      app.UseCors("MyPolicy");
+      app.UseAuthentication();
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
@@ -58,7 +80,6 @@ namespace SmartHub.Api
         app.UseHsts();
       }
 
-      app.UseCors("MyPolicy");
 
       app.UseHttpsRedirection();
       app.UseMvc();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SmartHub.BusinessLogic.Contracts;
@@ -8,7 +9,7 @@ using SmartHub.Models;
 
 namespace SmartHub.Controllers
 {
-  //[Authorize]
+  [Authorize]
   [Route("api/[controller]")]
   public class DeviceController : Controller
   {
@@ -25,7 +26,8 @@ namespace SmartHub.Controllers
     public IActionResult Get()
     {
       _logger.LogInformation("Request all devices");
-      var devices = _deviceService.GetDevices().Select(d => new DeviceModel
+      var userId = Guid.Parse(User.Identity.Name);
+      var devices = _deviceService.GetDevices(userId).Select(d => new DeviceModel
       {
         Id = d.Id,
         Name = d.Name,
@@ -70,7 +72,8 @@ namespace SmartHub.Controllers
     public IActionResult Register([FromBody]RegisterDeviceModel registerDeviceModel)
     {
       _logger.LogInformation("Registering new device", registerDeviceModel);
-      _deviceService.RegisterDevice(registerDeviceModel.Name, registerDeviceModel.Description);
+      var userId = Guid.Parse(User.Identity.Name);
+      _deviceService.RegisterDevice(registerDeviceModel.Name, registerDeviceModel.Description, userId);
 
       return Ok();
     }

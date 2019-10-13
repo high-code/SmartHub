@@ -1,6 +1,6 @@
 using System;
 
-namespace SmartHub.Domain.Entities
+namespace SmartHub.Infrastructure.Entities
 {
   public class Device
   {
@@ -11,6 +11,8 @@ namespace SmartHub.Domain.Entities
     public string Name { get; set; }
 
     public string Description { get; set; }
- 
+
+    public Guid? UserId { get; set; }
+
   }
 }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using SmartHub.Domain;
+using SmartHub.Infrastructure;
 
 namespace SmartHub.Domain.Migrations
 {
@@ -19,37 +19,44 @@ namespace SmartHub.Domain.Migrations
                 .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("SmartHub.Domain.Entities.Device", b =>
+            modelBuilder.Entity("SmartHub.Infrastructure.Entities.Device", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasColumnName("description");
 
-                    b.Property<Guid>("DeviceId");
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnName("device_id");
 
                     b.Property<string>("Name")
                         .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnName("user_id");
 
-                    b.HasAlternateKey("DeviceId");
+                    b.HasKey("Id")
+                        .HasName("pk_devices");
+
+                    b.HasAlternateKey("DeviceId")
+                        .HasName("ak_devices_device_id");
 
                     b.ToTable("devices");
                 });
 
-            modelBuilder.Entity("SmartHub.Domain.Entities.Measurement", b =>
+            modelBuilder.Entity("SmartHub.Infrastructure.Entities.Measurement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id");
 
                     b.Property<Guid>("DeviceId")
-                        .HasColumnName("deviceid");
+                        .HasColumnName("device_id");
 
                     b.Property<DateTime?>("DtSend")
-                        .HasColumnName("dtsend");
+                        .HasColumnName("dt_send");
 
                     b.Property<int>("Type")
                         .HasColumnName("type");
@@ -57,7 +64,8 @@ namespace SmartHub.Domain.Migrations
                     b.Property<double>("Value")
                         .HasColumnName("value");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_measurements");
 
                     b.ToTable("measurements");
                 });

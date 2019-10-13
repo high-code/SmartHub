@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20190629122529_add telemetry.cs" />
+    <Compile Remove="Migrations\20191013190603_AddUserIdToDevice.cs" />
   </ItemGroup>
 
   <ItemGroup>

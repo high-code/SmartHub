@@ -9,7 +9,7 @@ import { DeviceCardComponent } from './device-list/device-card/device-card.compo
 import { RegisterDeviceComponent } from './register-device/register-device.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './services/in-memory-data-service.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DevicePageComponent } from './device-page/device-page.component';
 import { NotificationBoxComponent } from './notification-box/notification-box.component';
 import { NotificationComponent } from './notification/notification.component';
@@ -25,6 +25,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SmarthubProfileComponent } from './smarthub-profile/smarthub-profile.component';
 import { RegisterComponent } from './register/register.component';
 import { PasswordNotMatchValidatorDirective } from './validators/password-matches.directive';
+import { JwtTokenInterceptor } from './http-interceptors/jwt-interceptor';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { PasswordNotMatchValidatorDirective } from './validators/password-matche
     SmarthubProfileComponent,
     RegisterComponent,
     PasswordNotMatchValidatorDirective
-
+    
   ],
   imports: [
     BrowserModule,
@@ -54,7 +55,12 @@ import { PasswordNotMatchValidatorDirective } from './validators/password-matche
     NgxSpinnerModule,
     NgbModule
   ],
-  providers: [ConfigurationService, StorageService, AuthGuard, PasswordNotMatchValidatorDirective],
+  providers: [ConfigurationService, StorageService, AuthGuard, PasswordNotMatchValidatorDirective, 
+  { 
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtTokenInterceptor,
+    multi: true}
+  ],
   entryComponents: [NotificationComponent],
   bootstrap: [AppComponent]
 })

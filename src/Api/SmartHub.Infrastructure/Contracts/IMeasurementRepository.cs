@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using SmartHub.Domain.Entities;
+using SmartHub.Infrastructure.Contracts;
+using SmartHub.Infrastructure.Entities;
 
 namespace SmartHub.Domain.Contracts
 {

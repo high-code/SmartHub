@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using SmartHub.Domain.Contracts;
+using SmartHub.Infrastructure.Contracts;
 
-namespace SmartHub.Domain.Concrete
+namespace SmartHub.Infrastructure.Concrete
 {
   public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
   {

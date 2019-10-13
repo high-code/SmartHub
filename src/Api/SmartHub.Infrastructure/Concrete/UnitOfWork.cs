@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SmartHub.Domain;
 using SmartHub.Domain.Contracts;
+using SmartHub.Infrastructure.Contracts;
 
-namespace SmartHub.Domain.Concrete
+namespace SmartHub.Infrastructure.Concrete
 {
   public class UnitOfWork : IUnitOfWork
   {

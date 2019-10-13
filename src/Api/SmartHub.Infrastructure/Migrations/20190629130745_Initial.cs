@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace SmartHub.Domain.Migrations
+namespace SmartHub.Infrastructure.Migrations
 {
     public partial class Initial : Migration
     {

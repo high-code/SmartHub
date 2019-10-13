@@ -1,8 +1,8 @@
 using System;
 using SmartHub.BusinessLogic.Models;
-using SmartHub.Domain.Entities;
-using Device = SmartHub.Domain.Entities.Device;
-using Measurement = SmartHub.Domain.Entities.Measurement;
+using SmartHub.Infrastructure.Entities;
+using Device = SmartHub.Infrastructure.Entities.Device;
+using Measurement = SmartHub.Infrastructure.Entities.Measurement;
 
 namespace SmartHub.BL.Converters
 {

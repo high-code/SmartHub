@@ -28,6 +28,11 @@
                 "output": "/"
               },
               {
+                "glob": "silent-renew.html",
+                "input": "src",
+                "output": "/"
+              },
+              {
                 "glob": "oidc-client.min.js",
                 "input": "node_modules/oidc-client/dist",
                 "output": "/"
