@@ -9,7 +9,7 @@ const settings: any = {
   client_id: 'spa',
   redirect_uri: "https://localhost:44332/auth.html",
   response_type: 'id_token token',
-  scope: "openid profile",
+  scope: "openid profile smarthub",
   silent_redirect_uri: 'http://localhost:44332/silent-renew.html',
   automaticSilentRenew: true,
   accessTokenExpiringNotificationTime: 4,
@@ -30,56 +30,56 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {
     this.userManager.getUser()
-       .then((user) => {
-         if(user) {
+      .then((user) => {
+        if(user) {
           this.loggedIn = true;
           this.currentUser = user;
           this.userLoadedEvent.emit(user);
-         }
-         else {
-           this.loggedIn = false;
-         }
-       })
-       .catch((err) => {
-         this.loggedIn = false;
-       });
+        }
+        else {
+          this.loggedIn = false;
+        }
+      })
+      .catch((err) => {
+        this.loggedIn = false;
+      });
 
-       this.userManager.events.addUserLoaded((user) => {
-         this.currentUser = user;
-         this.loggedIn = !(user === undefined);
-       });
+    this.userManager.events.addUserLoaded((user) => {
+      this.currentUser = user;
+      this.loggedIn = !(user === undefined);
+    });
 
-       this.userManager.events.addUserUnloaded(e => {
-         this.loggedIn = false;
-       })
+    this.userManager.events.addUserUnloaded(e => {
+      this.loggedIn = false;
+    })
   }
 
   getUser() : Observable<User> {
-     return from(this.userManager.getUser()).pipe(
-       tap((val) => {
-         if(!environment.production) {
-            console.log("fetching user")
-       } 
+    return from(this.userManager.getUser()).pipe(
+      tap((val) => {
+        if(!environment.production) {
+          console.log("fetching user")
+        }
       })
-     )
+    )
   }
 
-  isLoggedInObs() : Observable<boolean> 
+  isLoggedInObs() : Observable<boolean>
   {
-     return from(this.userManager.getUser())
-       .pipe(map<User, boolean>(user => {
-         if(user)
-           return true;
-         return false;
-       }))
+    return from(this.userManager.getUser())
+      .pipe(map<User, boolean>(user => {
+        if(user)
+          return true;
+        return false;
+      }))
   }
   signin(){
     this.userManager.signinRedirect().then(() => {
       console.log("signinRedirect done")
     })
-    .catch((err) => {
-      console.log(err)
-    })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
 
@@ -97,9 +97,5 @@ export class AuthenticationService {
         })
     })
   }
-
-  
-     
-     
-  }
+}
 

@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using SmartHub.Identity.Context;
 using SmartHub.Identity.Identity;
 
@@ -15,12 +16,15 @@ namespace SmartHub.Identity
 {
   public class Startup
   {
-    public Startup(IConfiguration configuration)
+    public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
     {
       Configuration = configuration;
+      _loggerFactory = loggerFactory;
     }
 
     public IConfiguration Configuration { get; }
+
+    private ILoggerFactory _loggerFactory;
 
     public void ConfigureServices(IServiceCollection services)
     {
@@ -41,14 +45,17 @@ namespace SmartHub.Identity
         .AddEntityFrameworkStores<SmartHubIdentityDbContext>()
         .AddDefaultTokenProviders();
 
-      services.AddIdentityServer()
+      services.AddIdentityServer(
+          option => { option.IssuerUri = "devenv"; })
         .AddInMemoryClients(Config.GetClients())
         .AddInMemoryApiResources(Config.GetAPis())
         .AddInMemoryIdentityResources(Config.GetIdentityResources())
         .AddDeveloperSigningCredential()
         .AddAspNetIdentity<ApplicationUser>();
 
-        
+      
+      
+      services.AddIdentityServerCorsPolicy(new List<string>{ "https://localhost:44332"}, _loggerFactory);
       services.AddCors(o => o.AddPolicy("SpaAuthCors", builder =>
       {
         builder.AllowAnyOrigin()
@@ -84,11 +91,12 @@ namespace SmartHub.Identity
 
       app.UseAuthentication();
       app.UseCors("SpaAuthCors");
-      app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseCookiePolicy();
       app.UseIdentityServer();
       app.UseMvcWithDefaultRoute();
     }
+
+
   }
 }

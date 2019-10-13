@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SmartHub.BusinessLogic.Contracts;
@@ -8,7 +9,7 @@ using SmartHub.Models;
 
 namespace SmartHub.Controllers
 {
-  //[Authorize]
+  [Authorize]
   [Route("api/[controller]")]
   public class DeviceController : Controller
   {

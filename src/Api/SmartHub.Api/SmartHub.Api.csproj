@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.11" />
@@ -31,6 +32,12 @@
   <ItemGroup>
     <ProjectReference Include="..\SmartHub.BusinessLogic\SmartHub.BusinessLogic.csproj" />
     <ProjectReference Include="..\SmartHub.Infrastructure\SmartHub.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="IdentityModel">
+      <HintPath>C:\Users\Andrii\.nuget\packages\identitymodel\3.10.6\lib\netstandard2.0\IdentityModel.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
