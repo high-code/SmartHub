@@ -2,16 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SmartHub.Infrastructure;
 
-namespace SmartHub.Domain.Migrations
+namespace SmartHub.Infrastructure.Migrations
 {
     [DbContext(typeof(SmartHubContext))]
-    partial class SmartHubContextModelSnapshot : ModelSnapshot
+    [Migration("20191013191130_AddUserIdToDevice")]
+    partial class AddUserIdToDevice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

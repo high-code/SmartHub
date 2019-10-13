@@ -27,14 +27,15 @@ namespace SmartHub.BusinessLogic.Services
       _unitOfWork.Commit();
     }
 
-    public void RegisterDevice(string name, string description)
+    public void RegisterDevice(string name, string description, Guid userId)
     {
-
+      
       var device = new Infrastructure.Entities.Device
       {
         Description = description,
         Name = name,
-        DeviceId = Guid.NewGuid()
+        DeviceId = Guid.NewGuid(),
+        UserId = userId
       };
 
       _unitOfWork.Devices.Add(device);
@@ -74,9 +75,9 @@ namespace SmartHub.BusinessLogic.Services
 
     }
 
-    public IEnumerable<Device> GetDevices()
+    public IEnumerable<Device> GetDevices(Guid userId)
     {
-      var devices = _unitOfWork.Devices.GetAll();
+      var devices = _unitOfWork.Devices.Find(d => d.UserId.Value == userId);
 
       return devices.Select(d => new Device
       {

@@ -11,7 +11,11 @@ namespace SmartHub.BL.Converters
     {
       return new Infrastructure.Entities.Device
       {
+        Id = device.Id,
         Name = device.Name,
+        DeviceId = device.DeviceId,
+        Description = device.Description,
+        UserId = device.UserId
       };
     }
   }
