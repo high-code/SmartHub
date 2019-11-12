@@ -23,7 +23,6 @@ services:
      - ASPNETCORE_ENVIRONMENT=Development
      - ASPNETCORE_URLS=https://+:443;http://+:80
      - ASPNETCORE_HTTPS_PORT=44398
-     - kafka_endpoint=kafka:9092
     ports:
       - "44398:443"
       - "49582:80"
@@ -50,8 +49,6 @@ services:
      - ASPNETCORE_ENVIRONMENT=Development
      - ASPNETCORE_URLS=https://+:443;http://+:80
      - ASPNETCORE_HTTPS_PORT=44335
-     - BrokerURI=kafka:9092
-     - KafkaConsumerGroupId=notification-consumers
      - RedisURI=redis:6379
     ports:
       - "44335:443"
@@ -61,9 +58,7 @@ services:
      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
   smarthub.saverservice:
     environment:
-     - BrokerURI=kafka:9092
      - ConnectionString=User ID=postgres;Password=admin;Server=postgres;Port=5432;Database=smarthub;Integrated Security=true; Pooling=true;
-     - KafkaConsumerGroupId=storage-consumers
   smarthub.identity:
     environment:
      - ASPNETCORE_ENVIRONMENT=Development

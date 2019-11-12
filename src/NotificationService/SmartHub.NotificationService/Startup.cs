@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Confluent.Kafka;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,9 +6,6 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using SmartHub.KafkaConsumer;
-using SmartHub.NotificationService.Concrete;
 using SmartHub.NotificationService.Hubs;
 
 namespace SmartHub.NotificationService
@@ -39,15 +32,6 @@ namespace SmartHub.NotificationService
       services.AddLogging();
       services.AddSignalR().AddRedis(
         Configuration["RedisURI"], options => options.Configuration.ClientName = "NotificationService");
-      services.AddHostedService<ConsumerHostedService>();
-      services.AddSingleton<INotificationService, Concrete.NotificationService>();
-      services.AddSingleton<IKafkaConsumer, Consumer>(i => new Consumer(i.GetRequiredService<ILogger<Consumer>>(),
-        new ConsumerConfig
-        {
-          BootstrapServers = Configuration["BrokerURI"],
-          GroupId = Configuration["KafkaConsumerGroupId"],
-          AutoOffsetReset = AutoOffsetReset.Earliest
-        }));
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
     }
 
