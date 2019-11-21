@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace SmartHub.Infrastructure.Contracts
+namespace SmartHub.DataAccess.Contracts
 {
   public interface IRepository<TEntity> where TEntity : class
   {

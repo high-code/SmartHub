@@ -60,13 +60,6 @@ namespace SmartHub.Controllers
       return Ok(deviceModel);
     }
 
-    [HttpGet("{id}/telemetry")]
-    public IActionResult GetTelemetry(int id, DateTime? startFrom, DateTime? endTo)
-    {
-      var telemetries = _deviceService.GetTelemetry(id, startFrom, endTo);
-
-      return Ok(telemetries);
-    }
 
     [HttpPost("register")]
     public IActionResult Register([FromBody]RegisterDeviceModel registerDeviceModel)

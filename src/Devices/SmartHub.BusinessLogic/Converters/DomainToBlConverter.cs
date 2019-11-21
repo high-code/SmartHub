@@ -2,7 +2,6 @@ using System;
 using SmartHub.BusinessLogic.Models;
 using SmartHub.Infrastructure.Entities;
 using Device = SmartHub.Infrastructure.Entities.Device;
-using Measurement = SmartHub.Infrastructure.Entities.Measurement;
 
 namespace SmartHub.BL.Converters
 {
@@ -17,18 +16,6 @@ namespace SmartHub.BL.Converters
         Id = device.Id,
         Description = device.Description,
         DeviceId = device.DeviceId
-      };
-    }
-
-    public static BusinessLogic.Models.Measurement ToMeasurement(Measurement measurement)
-    {
-      if (measurement == null) return null;
-
-      return new BusinessLogic.Models.Measurement
-      {
-        DtSent = measurement.DtSend.Value,
-        Type = (MeasurementType) measurement.Type,
-        Value = measurement.Value
       };
     }
   }

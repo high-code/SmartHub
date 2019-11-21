@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Device = SmartHub.BusinessLogic.Models.Device;
-using Measurement = SmartHub.BusinessLogic.Models.Measurement;
 
 namespace SmartHub.BusinessLogic.Contracts
 {
@@ -14,8 +13,6 @@ namespace SmartHub.BusinessLogic.Contracts
     void UpdateDevice(int id,Device device);
 
     Device GetDeviceById(int id);
-
-    IEnumerable<Measurement> GetTelemetry(int deviceId, DateTime? from, DateTime? end);
 
     IEnumerable<Device> GetDevices(Guid userId);
 

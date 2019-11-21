@@ -1,14 +1,11 @@
 using System;
-using SmartHub.Domain.Contracts;
+using SmartHub.DataAccess.Contracts;
 
 namespace SmartHub.Infrastructure.Contracts
 {
-  public interface IUnitOfWork : IDisposable
+  public interface IUnitOfWork : IUnitOfWorkBase
   {
     IDeviceRepository Devices { get; }
 
-    IMeasurementRepository Measurements { get; }
-
-    int Commit();
   }
 }

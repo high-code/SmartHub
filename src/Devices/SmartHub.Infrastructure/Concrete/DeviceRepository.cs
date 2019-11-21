@@ -1,8 +1,6 @@
-using SmartHub.Domain;
-using SmartHub.Domain.Contracts;
 using SmartHub.Infrastructure.Contracts;
 using SmartHub.Infrastructure.Entities;
-
+using SmartHub.DataAccess.Concrete;
 namespace SmartHub.Infrastructure.Concrete
 {
   public class DeviceRepository : Repository<Device>, IDeviceRepository

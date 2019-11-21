@@ -5,7 +5,6 @@ using SmartHub.BL.Converters;
 using SmartHub.BusinessLogic.Contracts;
 using SmartHub.Infrastructure.Contracts;
 using Device = SmartHub.BusinessLogic.Models.Device;
-using Measurement = SmartHub.BusinessLogic.Models.Measurement;
 
 namespace SmartHub.BusinessLogic.Services
 {
@@ -64,17 +63,6 @@ namespace SmartHub.BusinessLogic.Services
       return blDevice;
     }
 
-    public IEnumerable<Measurement> GetTelemetry(int deviceId, DateTime? from, DateTime? end)
-    {
-
-      var telemetries = _unitOfWork.Measurements.Find(t => t.Id == deviceId && t.DtSend < end && t.DtSend > end);
-
-      var convertedTelemetries = telemetries.Select(DomainToBlConverter.ToMeasurement);
-
-      return convertedTelemetries;
-
-    }
-
     public IEnumerable<Device> GetDevices(Guid userId)
     {
       var devices = _unitOfWork.Devices.Find(d => d.UserId.Value == userId);
@@ -87,8 +75,6 @@ namespace SmartHub.BusinessLogic.Services
         Description = d.Description
       });
     }
-
-
 
     public void DeleteDevice(int deviceId)
     {
