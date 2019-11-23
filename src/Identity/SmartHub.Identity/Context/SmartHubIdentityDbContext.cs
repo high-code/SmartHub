@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SmartHub.Identity.Helpers;
 using SmartHub.Identity.Identity;
+using SmartHub.DataAccess;
 
 namespace SmartHub.Identity.Context
 {

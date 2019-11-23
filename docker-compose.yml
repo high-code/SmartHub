@@ -5,18 +5,12 @@ services:
     image: ${DOCKER_REGISTRY-}smarthubapi
     build:
       context: .
-      dockerfile: src/Api/SmartHub.Api/Dockerfile
+      dockerfile: src/Devices/SmartHub.Devices/Dockerfile
   smarthub.edge:
     image: ${DOCKER_REGISTRY-}smarthubedge
     build:
       context: .
       dockerfile: src/Edge/SmartHub.Edge/Dockerfile
-  smarthub.saverservice:
-    image: ${DOCKER_REGISTRY-}smarthubsaverservice
-    build:
-      context: .
-      dockerfile: src/SaverService/SmartHub.SaverService/Dockerfile
-    restart: on-failure
   smarthub.notificationservice:
     image: ${DOCKER_REGISTRY-}smarthubnotificationservice
     build:
@@ -32,21 +26,6 @@ services:
     build:
       context: .
       dockerfile: src/Identity/SmartHub.Identity/Dockerfile
-  zookeeper:
-    image: 'bitnami/zookeeper:latest'
-    ports:
-      - '2181:2181'
-    environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
-  kafka:
-    image: 'wurstmeister/kafka:latest'
-    ports:
-      - '9092:9092'
-    environment:
-     - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-     - ALLOW_PLAINTEXT_LISTENER=yes,
-     - KAFKA_CREATE_TOPICS=telemetry:1:1
-     - KAFKA_ADVERTISED_HOST_NAME=kafka
   postgres:
     image: 'postgres:latest'
   redis:
