@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace SmartHub.Identity.Helpers
+namespace SmartHub.DataAccess
 {
   public static class ModelBuilderExtensions
   {
@@ -9,7 +8,8 @@ namespace SmartHub.Identity.Helpers
     public static void ToSnakeCaseNamingConventions(this ModelBuilder builder)
     {
       foreach (var entity in builder.Model.GetEntityTypes())
-      {
+      { 
+        
         entity.Relational().TableName = entity.Relational().TableName.ToSnakeCaseInvariant();
 
         foreach (var prop in entity.GetProperties())

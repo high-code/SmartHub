@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SmartHub.BusinessLogic.Models
+namespace SmartHub.Edge.Infrastructure.Entities
 {
   public enum MeasurementType
   {

@@ -5,18 +5,12 @@ services:
     image: ${DOCKER_REGISTRY-}smarthubapi
     build:
       context: .
-      dockerfile: src/Api/SmartHub.Api/Dockerfile
+      dockerfile: src/Devices/SmartHub.Devices/Dockerfile
   smarthub.edge:
     image: ${DOCKER_REGISTRY-}smarthubedge
     build:
       context: .
       dockerfile: src/Edge/SmartHub.Edge/Dockerfile
-  smarthub.saverservice:
-    image: ${DOCKER_REGISTRY-}smarthubsaverservice
-    build:
-      context: .
-      dockerfile: src/SaverService/SmartHub.SaverService/Dockerfile
-    restart: on-failure
   smarthub.notificationservice:
     image: ${DOCKER_REGISTRY-}smarthubnotificationservice
     build:

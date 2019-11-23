@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SmartHub.Identity.Helpers;
+using SmartHub.DataAccess;
 using SmartHub.Infrastructure.Configurations;
 using SmartHub.Infrastructure.Entities;
 

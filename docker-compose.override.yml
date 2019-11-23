@@ -23,6 +23,7 @@ services:
      - ASPNETCORE_ENVIRONMENT=Development
      - ASPNETCORE_URLS=https://+:443;http://+:80
      - ASPNETCORE_HTTPS_PORT=44398
+     - ConnectionStrings__Default=User ID = postgres;Password=admin;Server=postgres;Port=5432;Database=smarthub_edge;Integrated Security=true; Pooling=true;
     ports:
       - "44398:443"
       - "49582:80"
@@ -56,9 +57,6 @@ services:
     volumes:
      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-  smarthub.saverservice:
-    environment:
-     - ConnectionString=User ID=postgres;Password=admin;Server=postgres;Port=5432;Database=smarthub;Integrated Security=true; Pooling=true;
   smarthub.identity:
     environment:
      - ASPNETCORE_ENVIRONMENT=Development

@@ -1,11 +1,12 @@
 using System;
 
-namespace SmartHub.BusinessLogic.Models
+namespace SmartHub.Edge.Infrastructure.Entities
 {
   public class Measurement
   {
+    public int Id { get; set; }
 
-
+    public int DeviceId { get; set; }
 
     public DateTime DtSent { get; set; }
 
