@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmartHub.Edge.Infrastructure;
+using SmartHub.Edge.Infrastructure.Concrete;
+using SmartHub.Edge.Infrastructure.Contracts;
 
 namespace SmartHub.Edge
 {
@@ -31,6 +33,9 @@ namespace SmartHub.Edge
       {
         o.UseNpgsql(Configuration.GetConnectionString("Default"));
       });
+
+      services.AddScoped<IUnitOfWork, UnitOfWork>();
+      services.AddScoped<IMeasurementsRepository, MeasurementRepository>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

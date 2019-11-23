@@ -6,11 +6,11 @@ namespace SmartHub.Infrastructure.Concrete
   public class UnitOfWork : UnitOfWorkBase<SmartHubContext>,IUnitOfWork
   {
 
-    public IDeviceRepository Devices { get; set; }
+    public IDeviceRepository Devices { get; }
 
-    public UnitOfWork(SmartHubContext context) : base(context)
+    public UnitOfWork(SmartHubContext context, IDeviceRepository deviceRepository) : base(context)
     {
-      Devices = new DeviceRepository(_context);
+      Devices = deviceRepository;
     }
   }
 }

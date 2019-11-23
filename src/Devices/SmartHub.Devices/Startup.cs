@@ -61,6 +61,7 @@ namespace SmartHub.Api
         });
       
       services.AddScoped<IUnitOfWork, UnitOfWork>();
+      services.AddScoped<IDeviceRepository, DeviceRepository>();
       services.AddScoped<IDeviceService, DeviceService>();
 
     }
