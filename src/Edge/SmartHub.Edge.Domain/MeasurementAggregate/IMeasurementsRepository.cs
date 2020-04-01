@@ -1,8 +1,7 @@
 ﻿using System;
 using SmartHub.DataAccess.Contracts;
-using SmartHub.Edge.Infrastructure.Entities;
 
-namespace SmartHub.Edge.Infrastructure.Contracts
+namespace SmartHub.Edge.Domain.MeasurementAggregate
 {
   public interface IMeasurementsRepository : IRepository<Measurement>
   {

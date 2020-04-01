@@ -32,3 +32,5 @@ services:
     image: 'redis:latest'
   seq:
     image: 'datalust/seq:latest'
+  rabbitmq:
+    image: 'rabbitmq:latest'

@@ -1,7 +1,6 @@
 ﻿using System;
 using SmartHub.DataAccess.Concrete;
-using SmartHub.Edge.Infrastructure.Contracts;
-using SmartHub.Edge.Infrastructure.Entities;
+using SmartHub.Edge.Domain.MeasurementAggregate;
 
 namespace SmartHub.Edge.Infrastructure.Concrete
 {

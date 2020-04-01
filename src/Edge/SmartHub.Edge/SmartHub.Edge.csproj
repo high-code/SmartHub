@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="MediatR" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.11" />
@@ -23,6 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DataAccess\SmartHub.DataAccess\SmartHub.DataAccess.csproj" />
+    <ProjectReference Include="..\SmartHub.Edge.Domain\SmartHub.Edge.Domain.csproj" />
     <ProjectReference Include="..\SmartHub.Edge.Infrastructure\SmartHub.Edge.Infrastructure.csproj" />
   </ItemGroup>
 

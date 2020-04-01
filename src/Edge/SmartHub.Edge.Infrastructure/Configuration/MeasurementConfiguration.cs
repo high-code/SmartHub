@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SmartHub.Edge.Infrastructure.Entities;
+using SmartHub.Edge.Domain.MeasurementAggregate;
 
 namespace SmartHub.Edge.Infrastructure.Configuration
 {

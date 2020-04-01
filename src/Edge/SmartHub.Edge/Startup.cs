@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,7 +13,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmartHub.Edge.Infrastructure;
 using SmartHub.Edge.Infrastructure.Concrete;
-using SmartHub.Edge.Infrastructure.Contracts;
 
 namespace SmartHub.Edge
 {
@@ -25,7 +26,7 @@ namespace SmartHub.Edge
     public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
+    public IServiceProvider ConfigureServices(IServiceCollection services)
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -34,8 +35,14 @@ namespace SmartHub.Edge
         o.UseNpgsql(Configuration.GetConnectionString("Default"));
       });
 
-      services.AddScoped<IUnitOfWork, UnitOfWork>();
-      services.AddScoped<IMeasurementsRepository, MeasurementRepository>();
+      var container = new ContainerBuilder();
+
+      container.RegisterModule(new ApplicationModule());
+      container.RegisterModule(new MediatorModule());
+      container.Populate(services);
+
+
+      return new AutofacServiceProvider(container.Build());
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

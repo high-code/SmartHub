@@ -87,6 +87,10 @@ services:
       - "5341:5341"
     volumes:
       - seq_logs:/data
+  rabbitmq:
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 volumes:
   postgres_database:
     external: true

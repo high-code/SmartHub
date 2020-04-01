@@ -33,8 +33,6 @@ namespace SmartHub.DataAccess.Concrete
     public void Dispose()
     {
       Dispose(true);
-
-      
     }
   }
 }
