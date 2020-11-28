@@ -15,7 +15,7 @@ namespace SmartHub.NotificationService.IntegrationEvents.EventHandling
 
     public async Task Handle(MeasurementReceivedIntegrationEvent integrationEvent)
     {
-      _logger.LogDebug("Received integration event", integrationEvent);
+      _logger.LogInformation("Received integration event", integrationEvent);
 
       await Task.CompletedTask;
     }
