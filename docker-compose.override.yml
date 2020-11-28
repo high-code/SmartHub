@@ -23,6 +23,9 @@ services:
      - ASPNETCORE_ENVIRONMENT=Development
      - ASPNETCORE_URLS=https://+:443;http://+:80
      - ASPNETCORE_HTTPS_PORT=44398
+     - EventBusConnection=rabbitmq
+     - EventBusUserName=guest
+     - EventBusPassword=guest
      - ConnectionStrings__Default=User ID = postgres;Password=admin;Server=postgres;Port=5432;Database=smarthub_edge;Integrated Security=true; Pooling=true;
     ports:
       - "44398:443"
@@ -51,6 +54,13 @@ services:
      - ASPNETCORE_URLS=https://+:443;http://+:80
      - ASPNETCORE_HTTPS_PORT=44335
      - RedisURI=redis:6379
+     - EventBusConnection=rabbitmq
+     - EventBusUserName=guest
+     - EventBusPassword=guest
+     - Seq__ServerUrl=http://seq:5341
+     - Seq__ApiKey=1234567890
+     - Seq__MinimumLevel=Trace
+     - Seq__LevelOverride__Microsoft=Warning
     ports:
       - "44335:443"
       - "49583:80"
@@ -87,6 +97,10 @@ services:
       - "5341:5341"
     volumes:
       - seq_logs:/data
+  rabbitmq:
+    ports:
+      - "5672:5672"
+      - "8090:15672"
 volumes:
   postgres_database:
     external: true

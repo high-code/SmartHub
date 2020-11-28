@@ -32,7 +32,7 @@ namespace SmartHub.Api
       services.AddEntityFrameworkNpgsql().AddDbContext<SmartHubContext>(opt =>
         opt.UseNpgsql(Configuration["ConnectionString"]));
 
-      services.AddLogging(loggingBuilder => { loggingBuilder.AddSeq(Configuration.GetSection("Seq")); });
+      services.AddLogging(loggingBuilder => loggingBuilder.AddSeq(Configuration.GetSection("Seq")));
 
       services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
       {
@@ -61,6 +61,7 @@ namespace SmartHub.Api
         });
       
       services.AddScoped<IUnitOfWork, UnitOfWork>();
+      services.AddScoped<IDeviceRepository, DeviceRepository>();
       services.AddScoped<IDeviceService, DeviceService>();
 
     }

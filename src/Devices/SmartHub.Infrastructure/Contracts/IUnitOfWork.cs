@@ -6,6 +6,5 @@ namespace SmartHub.Infrastructure.Contracts
   public interface IUnitOfWork : IUnitOfWorkBase
   {
     IDeviceRepository Devices { get; }
-
   }
 }

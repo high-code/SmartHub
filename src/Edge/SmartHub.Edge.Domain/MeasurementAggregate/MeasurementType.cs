@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SmartHub.Edge.Infrastructure.Entities
+namespace SmartHub.Edge.Domain.MeasurementAggregate
 {
   public enum MeasurementType
   {

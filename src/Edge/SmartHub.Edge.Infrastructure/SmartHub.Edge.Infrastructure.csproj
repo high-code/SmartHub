@@ -21,11 +21,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DataAccess\SmartHub.DataAccess\SmartHub.DataAccess.csproj" />
+    <ProjectReference Include="..\SmartHub.Edge.Domain\SmartHub.Edge.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Concrete\" />
-    <Folder Include="Contracts\" />
+    <Folder Include="Entities\" />
   </ItemGroup>
 
 </Project>

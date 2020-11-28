@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartHub.Edge.Infrastructure.Configuration;
-using SmartHub.Edge.Infrastructure.Entities;
 using SmartHub.DataAccess;
+using SmartHub.Edge.Domain.MeasurementAggregate;
 
 namespace SmartHub.Edge.Infrastructure
 {

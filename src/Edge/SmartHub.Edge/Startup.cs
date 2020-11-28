@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,7 +11,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RabbitMQ.Client;
+using SmartHub.Edge.Application.IntegrationEvents;
 using SmartHub.Edge.Infrastructure;
+using SmartHub.Edge.Infrastructure.Concrete;
+using SmartHub.IntegrationEventLog.Services;
+using SmartHub.Messaging;
+using SmartHub.Messaging.Abstractions;
+using SmartHub.Messaging.RabbitMQ;
 
 namespace SmartHub.Edge
 {
@@ -23,15 +32,25 @@ namespace SmartHub.Edge
     public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
+    public IServiceProvider ConfigureServices(IServiceCollection services)
     {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-      services.AddEntityFrameworkNpgsql().AddDbContext<EdgeDbContext>(o =>
-      {
-        o.UseNpgsql(Configuration.GetConnectionString("Default"));
-      });
+      services.AddCustomDbContext(Configuration)
+              .AddCustomIntegrations(Configuration)
+              .AddEventBus(Configuration);
+
+      var container = new ContainerBuilder();
+
+      container.RegisterModule(new ApplicationModule());
+      container.RegisterModule(new MediatorModule());
+      container.Populate(services);
+
+
+      return new AutofacServiceProvider(container.Build());
     }
+
+  
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -48,6 +67,84 @@ namespace SmartHub.Edge
 
       app.UseHttpsRedirection();
       app.UseMvc();
+    }
+  }
+
+  public static class ServicesCollectionExtensions
+  {
+
+    public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
+    {
+
+      services.AddEntityFrameworkNpgsql().AddDbContext<EdgeDbContext>(o =>
+      {
+        o.UseNpgsql(configuration.GetConnectionString("Default"),
+          sqlOptions =>
+          {
+            sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorCodesToAdd: null);
+          });
+      }, ServiceLifetime.Scoped);
+
+      //services.AddDbContext<IntegrationEventLogContext>(options =>
+      //{
+      //  options.UseNpgsql(configuration.GetConnectionString("Default"),
+      //    sqlOptions =>
+      //    {
+      //      sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorCodesToAdd: null);
+      //      sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+      //    });
+      //});
+
+      return services;
+    }
+
+    public static IServiceCollection AddCustomIntegrations(this IServiceCollection services, IConfiguration configuration)
+    {
+      services.AddTransient<Func<DbConnection, IIntegrationEventLogService>>(
+               sp => (DbConnection c) => new IntegrationEventLogService(c));
+
+      services.AddTransient<IEdgeIntegrationEventLogService, EdgeIntegrationEventService>();
+
+      services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
+      {
+        var factory = new ConnectionFactory()
+        {
+          HostName = configuration["EventBusConnection"],
+          DispatchConsumersAsync = true
+        };
+
+        if(!string.IsNullOrEmpty(configuration["EventBusUserName"]))
+        {
+          factory.UserName = configuration["EventBusUserName"];
+        }
+
+        if (!string.IsNullOrEmpty(configuration["EventBusPassword"]))
+        {
+          factory.Password = configuration["EventBusPassword"];
+        }
+
+        return new DefaultRabbitMQPersistentConnection(factory, null);
+      });
+      return services;
+    }
+
+    public static IServiceCollection AddEventBus(this IServiceCollection services, IConfiguration configuration)
+    {
+      var subscriptionClientName = configuration["SubscriptionClientName"];
+
+      services.AddSingleton<IEventBus, EventBusRabbitMQ>(sp =>
+      {
+        var rabbitMqPersistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
+        var lifetimeScope = sp.GetRequiredService<ILifetimeScope>();
+
+        var eventBusSubscriptionManager = sp.GetRequiredService<IEventBusSubscriptionManager>();
+
+        return new EventBusRabbitMQ(rabbitMqPersistentConnection, eventBusSubscriptionManager, lifetimeScope,null, 5, subscriptionClientName);
+      });
+
+      services.AddSingleton<IEventBusSubscriptionManager, InMemoryEventBusSubscriptionManager>();
+
+      return services;
     }
   }
 }
