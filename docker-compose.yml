@@ -33,4 +33,4 @@ services:
   seq:
     image: 'datalust/seq:latest'
   rabbitmq:
-    image: 'rabbitmq:latest'
+    image: 'rabbitmq:3-management'

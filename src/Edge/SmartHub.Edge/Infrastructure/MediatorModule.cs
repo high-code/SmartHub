@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using MediatR;
+using SmartHub.Edge.Application;
 using SmartHub.Edge.Application.Commands;
 
 namespace SmartHub.Edge.Infrastructure
@@ -16,8 +17,6 @@ namespace SmartHub.Edge.Infrastructure
     {
 
     }
-
-
     protected override void Load(ContainerBuilder builder)
     {
 
@@ -32,7 +31,8 @@ namespace SmartHub.Edge.Infrastructure
 
       builder.RegisterAssemblyTypes(typeof(RecordMeasurementsCommand).GetTypeInfo().Assembly)
         .AsClosedTypesOf(typeof(IRequestHandler<,>));
-      base.Load(builder);
+      builder.RegisterGeneric(typeof(TransactionBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+
     }
   }
 }

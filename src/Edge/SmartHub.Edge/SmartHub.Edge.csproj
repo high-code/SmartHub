@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <UserSecretsId>eab4f4d7-308a-4aac-8ee1-bfbf752359d2</UserSecretsId>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,9 +24,13 @@
     <PackageReference Include="Npgsql" Version="4.0.7" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="5.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SmartHub.IntegrationEventLog\SmartHub.IntegrationEventLog.csproj" />
+    <ProjectReference Include="..\..\..\SmartHub.Messaging.RabbitMQ\SmartHub.Messaging.RabbitMQ.csproj" />
+    <ProjectReference Include="..\..\..\SmartHub.Messaging\SmartHub.Messaging.csproj" />
     <ProjectReference Include="..\..\DataAccess\SmartHub.DataAccess\SmartHub.DataAccess.csproj" />
     <ProjectReference Include="..\SmartHub.Edge.Domain\SmartHub.Edge.Domain.csproj" />
     <ProjectReference Include="..\SmartHub.Edge.Infrastructure\SmartHub.Edge.Infrastructure.csproj" />

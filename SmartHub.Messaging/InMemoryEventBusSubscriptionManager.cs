@@ -31,7 +31,9 @@ namespace SmartHub.Messaging
     {
       var eventName = GetEventKey<T>();
 
-      if(_eventTypes.Contains(typeof(T)))
+      DoAddSubscription(typeof(TH), eventName);
+
+      if(!_eventTypes.Contains(typeof(T)))
       {
         _eventTypes.Add(typeof(T));
       }
@@ -39,13 +41,13 @@ namespace SmartHub.Messaging
 
     public IEnumerable<SubscriptionInfo> GetHandlersForEvent<T>() where T : IntegrationEvent
     {
-      throw new NotImplementedException();
+      var eventName = GetEventKey<T>();
+
+      return GetHandlersForEvent(eventName);
     }
 
-    public IEnumerable<SubscriptionInfo> GetHandlersForEvent(string eventName)
-    {
-      throw new NotImplementedException();
-    }
+    public IEnumerable<SubscriptionInfo> GetHandlersForEvent(string eventName) => _handlers[eventName];
+
 
 
 
@@ -70,6 +72,7 @@ namespace SmartHub.Messaging
       {
         throw new ArgumentException("Handler type is already registered");
       }
+      _handlers[eventName].Add(new SubscriptionInfo(handlerType));
     }
 
     private void RaiseOnEventRemoved(string eventName)

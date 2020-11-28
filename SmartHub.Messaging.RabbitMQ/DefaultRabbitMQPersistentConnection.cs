@@ -34,6 +34,8 @@ namespace SmartHub.Messaging.RabbitMQ
     {
 
       _retryCount = retryCount;
+      _connectionFactory = connectionFactory;
+      _logger = logger;
     }
     
 

@@ -19,7 +19,7 @@ namespace SmartHub.Messaging.RabbitMQ
 {
   public class EventBusRabbitMQ : IEventBus, IDisposable
   {
-    const string BROKER_NAME = "eshop_event_bus";
+    const string BROKER_NAME = "smarthub_eventbus";
 
     private ILifetimeScope _scope;
     private IRabbitMQPersistentConnection _persistentConnection;
@@ -156,6 +156,11 @@ namespace SmartHub.Messaging.RabbitMQ
         var consumer = new AsyncEventingBasicConsumer(_consumerChannel);
 
         consumer.Received += Consumer_Receive;
+
+        _consumerChannel.BasicConsume(
+          queue: _queueName,
+          autoAck: false,
+          consumer: consumer);
       }
     }
 
