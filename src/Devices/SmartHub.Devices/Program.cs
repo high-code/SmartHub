@@ -1,28 +1,64 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace SmartHub.Api
 {
   public class Program
   {
-    public static void Main(string[] args)
+    public static int Main(string[] args)
     {
-      CreateWebHostBuilder(args).Build().Run();
+      var configuration = GetConfiguration();
+      Log.Logger = CreateLogger(configuration);
+
+      try
+      {
+        CreateWebHostBuilder(configuration, args).Build().Run();
+        return 0;
+      }
+      catch(Exception ex)
+      {
+        Log.Fatal(ex, "Host terminated unexpectedly");
+        return 1;
+      }
+      finally
+      {
+        Log.CloseAndFlush();
+      }
     }
 
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+    public static IWebHostBuilder CreateWebHostBuilder(IConfiguration configuration, string[] args) =>
       WebHost.CreateDefaultBuilder(args)
         .UseStartup<Startup>()
-        .ConfigureLogging(builder =>
-        {
-          builder.AddConsole();
-        });
+        .UseContentRoot(Directory.GetCurrentDirectory())
+        .UseConfiguration(configuration)
+        .UseSerilog();
+        //.ConfigureLogging(builder =>
+        //{
+        //  builder.AddConsole();
+        //});
+    public static IConfiguration GetConfiguration()
+    {
+      return new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddEnvironmentVariables()
+        .Build();
+    }
+    public static ILogger CreateLogger(IConfiguration configuration)
+    {
+      var seqServerUrl = configuration["Serilog:SeqServerUrl"];
+      return new LoggerConfiguration()
+        .MinimumLevel.Verbose()
+        .Enrich.FromLogContext()
+        .Enrich.WithProperty("ApplicationContext", "Smarthub.Devices")
+        .WriteTo.Console()
+        .WriteTo.Seq(seqServerUrl)
+        .ReadFrom.Configuration(configuration)
+        .CreateLogger();
+    }
   }
 }

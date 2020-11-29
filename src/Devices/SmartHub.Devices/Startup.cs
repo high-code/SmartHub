@@ -32,8 +32,6 @@ namespace SmartHub.Api
       services.AddEntityFrameworkNpgsql().AddDbContext<SmartHubContext>(opt =>
         opt.UseNpgsql(Configuration["ConnectionString"]));
 
-      services.AddLogging(loggingBuilder => loggingBuilder.AddSeq(Configuration.GetSection("Seq")));
-
       services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
       {
         builder.AllowAnyOrigin()
