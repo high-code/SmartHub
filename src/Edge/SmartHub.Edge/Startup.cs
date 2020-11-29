@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using SmartHub.Edge.Application.IntegrationEvents;
 using SmartHub.Edge.Infrastructure;
-using SmartHub.Edge.Infrastructure.Concrete;
 using SmartHub.IntegrationEventLog.Services;
 using SmartHub.Messaging;
 using SmartHub.Messaging.Abstractions;
@@ -85,16 +80,6 @@ namespace SmartHub.Edge
             sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorCodesToAdd: null);
           });
       }, ServiceLifetime.Scoped);
-
-      //services.AddDbContext<IntegrationEventLogContext>(options =>
-      //{
-      //  options.UseNpgsql(configuration.GetConnectionString("Default"),
-      //    sqlOptions =>
-      //    {
-      //      sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorCodesToAdd: null);
-      //      sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-      //    });
-      //});
 
       return services;
     }

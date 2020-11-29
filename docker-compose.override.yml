@@ -24,6 +24,7 @@ services:
      - EventBusUserName=guest
      - EventBusPassword=guest
      - ConnectionStrings__Default=User ID = postgres;Password=admin;Server=postgres;Port=5432;Database=smarthub_edge;Integrated Security=true; Pooling=true;
+     - Serilog__SeqServerUrl=http://seq:5341
     ports:
       - "44398:443"
       - "49582:80"
