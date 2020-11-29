@@ -9,6 +9,8 @@ namespace SmartHub.Api
 {
   public class Program
   {
+
+    public const string AppName = "Smarthub.Devices";
     public static int Main(string[] args)
     {
       var configuration = GetConfiguration();
@@ -16,8 +18,9 @@ namespace SmartHub.Api
 
       try
       {
-        Log.Information("Configure and start application {ApplicationContext}")
+        Log.Information("Configure and start application {ApplicationContext}", AppName);
         CreateWebHostBuilder(configuration, args).Build().Run();
+        Log.Information("{ApplicationContext} statrted successfully", AppName);
         return 0;
       }
       catch(Exception ex)
@@ -52,7 +55,7 @@ namespace SmartHub.Api
       return new LoggerConfiguration()
         .MinimumLevel.Verbose()
         .Enrich.FromLogContext()
-        .Enrich.WithProperty("ApplicationContext", "Smarthub.Devices")
+        .Enrich.WithProperty("ApplicationContext", AppName)
         .WriteTo.Console()
         .WriteTo.Seq(seqServerUrl)
         .ReadFrom.Configuration(configuration)
