@@ -16,6 +16,7 @@ namespace SmartHub.Api
 
       try
       {
+        Log.Information("Configure and start application {ApplicationContext}")
         CreateWebHostBuilder(configuration, args).Build().Run();
         return 0;
       }
@@ -36,10 +37,7 @@ namespace SmartHub.Api
         .UseContentRoot(Directory.GetCurrentDirectory())
         .UseConfiguration(configuration)
         .UseSerilog();
-        //.ConfigureLogging(builder =>
-        //{
-        //  builder.AddConsole();
-        //});
+
     public static IConfiguration GetConfiguration()
     {
       return new ConfigurationBuilder()
