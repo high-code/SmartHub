@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SmartHub.Edge.Application.Commands;
 
 namespace SmartHub.Edge.Controllers
@@ -14,14 +12,17 @@ namespace SmartHub.Edge.Controllers
   {
 
     private readonly IMediator _mediator;
-
-    public MeasurementController(IMediator mediator)
+    private readonly ILogger<MeasurementController> _logger;
+    public MeasurementController(IMediator mediator, ILogger<MeasurementController> logger)
     {
       _mediator = mediator;
+      _logger = logger;
     }
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] RecordMeasurementsCommand recordMeasurementsCommand)
     {
+
+      _logger.LogInformation("Received {command} command. Start handling", recordMeasurementsCommand);
 
       var result = await _mediator.Send(recordMeasurementsCommand);
 
