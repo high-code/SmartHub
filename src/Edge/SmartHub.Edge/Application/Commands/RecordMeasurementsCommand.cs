@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using MediatR;
+using SmartHub.Edge.Application.DTO;
 
 namespace SmartHub.Edge.Application.Commands
 {
@@ -9,25 +10,13 @@ namespace SmartHub.Edge.Application.Commands
   public class RecordMeasurementsCommand : IRequest<bool>
   {
     [DataMember]
-    private readonly List<MeasurementDto> _measurements;
+    private readonly List<MeasurementDTO> _measurements;
     [DataMember]
-    public IEnumerable<MeasurementDto> Measurements => _measurements;
+    public IEnumerable<MeasurementDTO> Measurements => _measurements;
 
-    public RecordMeasurementsCommand(List<MeasurementDto> measurements)
+    public RecordMeasurementsCommand(List<MeasurementDTO> measurements)
     {
       _measurements = measurements;
-    }
-
-    public class MeasurementDto
-    {
-      public int DeviceId { get; set; }
-
-      public DateTime DtSent { get; set; }
-
-      public int MeasurementType { get; set; }
-
-      public double Value { get; set; }
-
     }
   }
 }
