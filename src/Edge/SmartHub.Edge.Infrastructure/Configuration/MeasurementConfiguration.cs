@@ -12,6 +12,7 @@ namespace SmartHub.Edge.Infrastructure.Configuration
       builder.Property(m => m.Id).HasColumnName("id");
       builder.Property(m => m.DeviceId).HasColumnName("device_id");
       builder.Property(m => m.DtSent).HasColumnName("dt_sent");
+      builder.Property(m => m.DtReceived).HasColumnName("dt_received");
       builder.Property(m => m.Type).HasColumnName("type");
       builder.Property(m => m.Value).HasColumnName("value");
       builder.ToTable("measurements");
