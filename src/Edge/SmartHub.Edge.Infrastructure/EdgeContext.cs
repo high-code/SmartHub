@@ -2,6 +2,7 @@
 using SmartHub.Edge.Infrastructure.Configuration;
 using SmartHub.DataAccess;
 using SmartHub.Edge.Domain.MeasurementAggregate;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace SmartHub.Edge.Infrastructure
 {
@@ -22,5 +23,15 @@ namespace SmartHub.Edge.Infrastructure
       builder.ToSnakeCaseNamingConventions();
     }
  
+  }
+
+  public class EdgeDbContextDesignFactory : IDesignTimeDbContextFactory<EdgeDbContext>
+  {
+    public EdgeDbContext CreateDbContext(string[] args)
+    {
+      var optionsBuilder = new DbContextOptionsBuilder<EdgeDbContext>()
+        .UseNpgsql("Server =.; Database = smarthub_edge; Integrated Security = true;");
+      return new EdgeDbContext(optionsBuilder.Options);
+    }
   }
 }

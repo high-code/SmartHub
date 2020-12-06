@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SmartHub.Messaging\SmartHub.Messaging.csproj" />
+    <ProjectReference Include="..\src\DataAccess\SmartHub.DataAccess\SmartHub.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
