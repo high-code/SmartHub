@@ -47,7 +47,7 @@ namespace SmartHub.Identity
 
       services.AddIdentityServer(
           option => { option.IssuerUri = "devenv"; })
-        .AddInMemoryClients(Config.GetClients())
+        .AddInMemoryClients(Config.GetClients(Configuration))
         .AddInMemoryApiResources(Config.GetAPis())
         .AddInMemoryIdentityResources(Config.GetIdentityResources())
         .AddDeveloperSigningCredential()
@@ -55,7 +55,7 @@ namespace SmartHub.Identity
 
       
       
-      services.AddIdentityServerCorsPolicy(new List<string>{ "https://localhost:44332"}, _loggerFactory);
+      services.AddIdentityServerCorsPolicy(new List<string>{ Configuration["SpaUrl"] }, _loggerFactory);
       services.AddCors(o => o.AddPolicy("SpaAuthCors", builder =>
       {
         builder.AllowAnyOrigin()

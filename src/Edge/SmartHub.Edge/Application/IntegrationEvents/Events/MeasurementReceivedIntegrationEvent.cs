@@ -1,26 +1,18 @@
-﻿using SmartHub.Messaging.Events;
-using System;
+﻿using System.Collections.Generic;
+using SmartHub.Edge.Application.DTO;
+using SmartHub.Messaging.Events;
 
 namespace SmartHub.Edge.Application.IntegrationEvents.Events
 {
   public class MeasurementReceivedIntegrationEvent : IntegrationEvent
   {
 
-    public int DeviceId { get; }
+    public IEnumerable<MeasurementDTO> Measurements { get; }
 
-    public DateTime DtSent { get; }
-
-    public int MeasurementType { get; }
-
-    public double Value { get; }
-
-    public MeasurementReceivedIntegrationEvent(int deviceId, DateTime sent,
-                                               int measurementType, double value)
+    public MeasurementReceivedIntegrationEvent(IEnumerable<MeasurementDTO> measurements)
     {
-      DeviceId = deviceId;
-      DtSent = sent;
-      MeasurementType = measurementType;
-      Value = value;
+      Measurements = measurements;
     }
   }
+
 }

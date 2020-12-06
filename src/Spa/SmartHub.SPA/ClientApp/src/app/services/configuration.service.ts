@@ -24,6 +24,7 @@ export class ConfigurationService {
            this.configuration = config as IConfiguration;
            this.storageService.store("notificationServiceUrl", this.configuration.notificationServiceUrl);
            this.storageService.store("smartHubApiUrl", this.configuration.smartHubApiUrl);
+           this.storageService.store("identityUrl", this.configuration.identityUrl);
            this.isLoaded = true;
            this.configurationLoadedSource.next();
        }) 

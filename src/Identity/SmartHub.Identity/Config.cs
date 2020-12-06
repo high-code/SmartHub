@@ -7,6 +7,7 @@ using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
+using Microsoft.Extensions.Configuration;
 
 namespace SmartHub.Identity
 {
@@ -39,8 +40,9 @@ namespace SmartHub.Identity
 
     }
 
-    public static List<Client> GetClients()
+    public static List<Client> GetClients(IConfiguration configuration)
     {
+      var spaUrl = configuration["SpaUrl"];
       return new List<Client>()
       {
         new Client()
@@ -51,11 +53,11 @@ namespace SmartHub.Identity
           AllowedGrantTypes = GrantTypes.Implicit,
           RedirectUris =
           {
-            "https://localhost:44332/auth.html",
-            "https://localhost:44332/silent-renew.html"
+            $"{spaUrl}/auth.html",
+            $"{spaUrl}/silent-renew.html"
           }, // change to configuration setting,
           RequireConsent = false,
-          PostLogoutRedirectUris = {$"https://localhost:44332"},
+          PostLogoutRedirectUris = {$"{spaUrl}"},
           AllowedScopes =
           {
             IdentityServerConstants.StandardScopes.OpenId,

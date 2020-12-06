@@ -38,7 +38,8 @@ namespace SmartHub.Api
                .AllowAnyMethod()
                .AllowAnyHeader();
       }));
-      
+
+      var authorityUrl = Configuration["AuthorityUrl"];
       services.AddAuthentication(options =>
           {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -46,8 +47,8 @@ namespace SmartHub.Api
           })
         .AddJwtBearer(options =>
         {
-          options.Authority = Configuration["AuthorityUrl"];
-          options.MetadataAddress = "http://smarthub.identity/.well-known/openid-configuration";
+          options.Authority = authorityUrl;
+          options.MetadataAddress = authorityUrl + "/.well-known/openid-configuration";
           options.RequireHttpsMetadata = false;
           options.Audience = "smarthub";
           options.IncludeErrorDetails = true;
