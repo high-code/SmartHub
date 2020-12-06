@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  redis:
+    image: 'redis:latest'
+    ports:
+     - "6379:6379"
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_database:/var/lib/postgresql/data:Z
+  seq:
+    image: 'datalust/seq:latest'
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "80:80"
+      - "5341:5341"
+    volumes:
+      - seq_logs:/data
+  rabbitmq:
+    image: 'rabbitmq:3-management'
+    ports:
+      - "5672:5672"
+      - "8090:15672"
+volumes:
+  postgres_database:
+    external: true
+  seq_logs:
+    external: true
