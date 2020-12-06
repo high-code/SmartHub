@@ -18,19 +18,12 @@
 </div>
 
 <div class="saved-data">
-  <!-- <table>
-    <thead>
-      <tr>
-        <th scope="col">Date</th>
-        <th scope="col">Type</th>
-        <th scope="col">Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let telemetry of savedTelemetry">
-      </tr>
-    </tbody>
-  </table> -->
+   <dx-data-grid
+    id="grid-container"
+    [dataSource]="receivedMeasurements"
+    [columns]="['time', 'type', 'value']"
+    [showBorders]="true">
+  </dx-data-grid>
 </div>
 
 

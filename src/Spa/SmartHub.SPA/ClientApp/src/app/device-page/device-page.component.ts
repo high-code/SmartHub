@@ -10,6 +10,13 @@ import * as Chart from "chart.js";
 import { Telemetry } from '../models/telemetry.model';
 import { ConfigurationService } from '../services/configuration.service';
 
+
+export class Measurement {
+  time  : Date;
+  type  : string;
+  value : string;
+}
+
 @Component({
   selector: 'app-device-page',
   templateUrl: './device-page.component.html',
@@ -26,6 +33,33 @@ export class DevicePageComponent implements OnInit, AfterViewInit {
   chart: Chart;
   values: Chart.ChartPoint[] = [];
   speed: number = 100;
+  
+  receivedMeasurements: Measurement[] = [{
+    time: new Date(2020, 12, 5, 12, 30, 45),
+    type: "Temperature",
+    value : "22.5°C" 
+  },
+  {
+    time: new Date(2020, 12, 5, 12, 31, 46),
+    type: "Temperature",
+    value : "22.6°C" 
+  },
+  {
+    time: new Date(2020, 12, 5, 12, 32, 44),
+    type: "Temperature",
+    value : "22.7°C" 
+  },
+  {
+    time: new Date(2020, 12, 5, 12, 33, 50),
+    type: "Temperature",
+    value : "22.4°C" 
+  },
+  {
+    time: new Date(2020, 12, 5, 12, 30, 40),
+    type: "Temperature",
+    value : "22.2°C" 
+  }];
+
 
   constructor(private route: ActivatedRoute,
     private router: Router,
