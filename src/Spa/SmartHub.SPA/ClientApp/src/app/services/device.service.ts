@@ -19,9 +19,9 @@ export class DeviceService {
   registerDeviceUrl: string = "register";
 
   constructor(private http: HttpClient, private configurationService: ConfigurationService) {
-    this.configurationService.configurationLoaded$.subscribe((conf) => {
-      this.baseUrl = this.configurationService.configuration.smartHubApiUrl;
-    })
+    if (this.configurationService.isLoaded) {
+        this.baseUrl = this.configurationService.configuration.smartHubApiUrl; 
+    }
   }
 
   getDevicesDescs(): Observable<DeviceDescription[]> {
