@@ -5,7 +5,9 @@ import { Measurement } from '../models/measurement.model';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-
+@Injectable({
+  providedIn: 'root'
+})
 export class MeasurementService {
 
     baseUrl: string = "";
@@ -19,9 +21,9 @@ export class MeasurementService {
     }
 
 
-    getMeasurements(id: number): Observable<Measurement> {
+    getMeasurements(id: string): Observable<Measurement[]> {
         const url = `${this.baseUrl}/${this.measurementsUrl}/${id}`;
-        return this.http.get<Measurement>(url)
+        return this.http.get<Measurement[]>(url)
           .pipe(
             tap(a => console.log(a))
           );

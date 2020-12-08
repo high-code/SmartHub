@@ -24,7 +24,7 @@ namespace SmartHub.Edge.Controllers
       _unitOfWork = unitOfWork;
     }
 
-    [HttpGet]
+    [HttpGet("{deviceId}")]
     public IActionResult Get(Guid deviceId)
     {
       _logger.LogInformation("GET measurements for deviceId={deviceId}", deviceId);

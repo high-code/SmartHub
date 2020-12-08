@@ -21,8 +21,11 @@
    <dx-data-grid
     id="grid-container"
     [dataSource]="receivedMeasurements"
-    [columns]="['time', 'type', 'value']"
     [showBorders]="true">
+    <dxi-column dataField="dtSent" dataType="datetime" format="yyyy-dd-MM HH:mm:s" caption="Sent date"></dxi-column>
+    <dxi-column dataField="type" dataType="string" caption="Type"></dxi-column>
+    <dxi-column dataField="value" dataType="string" caption="Value"></dxi-column>
+    <dxi-column dataField="dtReceived" dataType="datetime" format="yyyy-dd-MM HH:mm:ss" caption="Received date"></dxi-column>
   </dx-data-grid>
 </div>
 
