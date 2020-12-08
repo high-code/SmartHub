@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SmartHub.Edge.Application.Commands;
+using SmartHub.Edge.Domain;
 
 namespace SmartHub.Edge.Controllers
 {
@@ -13,11 +16,24 @@ namespace SmartHub.Edge.Controllers
 
     private readonly IMediator _mediator;
     private readonly ILogger<MeasurementController> _logger;
-    public MeasurementController(IMediator mediator, ILogger<MeasurementController> logger)
+    private readonly IUnitOfWork _unitOfWork;
+    public MeasurementController(IMediator mediator, ILogger<MeasurementController> logger, IUnitOfWork unitOfWork)
     {
       _mediator = mediator;
       _logger = logger;
+      _unitOfWork = unitOfWork;
     }
+
+    [HttpGet("{deviceId}")]
+    public IActionResult Get(Guid deviceId)
+    {
+      _logger.LogInformation("GET measurements for deviceId={deviceId}", deviceId);
+
+      var measurements = _unitOfWork.Measurements.Find(m => m.DeviceId == deviceId).ToList();
+
+      return Ok(measurements);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] RecordMeasurementsCommand recordMeasurementsCommand)
     {

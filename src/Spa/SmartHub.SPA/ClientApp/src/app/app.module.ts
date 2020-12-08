@@ -26,6 +26,7 @@ import { SmarthubProfileComponent } from './smarthub-profile/smarthub-profile.co
 import { RegisterComponent } from './register/register.component';
 import { PasswordNotMatchValidatorDirective } from './validators/password-matches.directive';
 import { JwtTokenInterceptor } from './http-interceptors/jwt-interceptor';
+import { DxDataGridModule } from 'devextreme-angular';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,6 @@ import { JwtTokenInterceptor } from './http-interceptors/jwt-interceptor';
     SmarthubProfileComponent,
     RegisterComponent,
     PasswordNotMatchValidatorDirective
-    
   ],
   imports: [
     BrowserModule,
@@ -53,7 +53,8 @@ import { JwtTokenInterceptor } from './http-interceptors/jwt-interceptor';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgxSpinnerModule,
-    NgbModule
+    NgbModule,
+    DxDataGridModule
   ],
   providers: [ConfigurationService, StorageService, AuthGuard, PasswordNotMatchValidatorDirective, 
   { 

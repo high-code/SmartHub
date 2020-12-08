@@ -38,6 +38,13 @@ namespace SmartHub.Edge
               .AddCustomIntegrations(Configuration)
               .AddEventBus(Configuration);
 
+      services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+      {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+      }));
+
       var container = new ContainerBuilder();
 
       container.RegisterModule(new ApplicationModule());
@@ -53,6 +60,7 @@ namespace SmartHub.Edge
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
+      app.UseCors("MyPolicy");
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();

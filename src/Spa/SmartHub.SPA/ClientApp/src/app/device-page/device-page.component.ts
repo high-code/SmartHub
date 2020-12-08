@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, AfterContentInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap, Route } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, mergeMap } from 'rxjs/operators';
 import { Device } from '../models/device';
 import { DeviceService } from '../services/device.service';
 import { Observable } from 'rxjs';
@@ -9,6 +9,17 @@ import * as signalR from '@aspnet/signalr';
 import * as Chart from "chart.js";
 import { Telemetry } from '../models/telemetry.model';
 import { ConfigurationService } from '../services/configuration.service';
+import { MeasurementService } from '../services/measurements.service';
+import { Measurement } from '../models/measurement.model';
+
+
+
+export class MeasurementView {
+  dtReceived: Date;
+  dtSent: Date;
+  value: string;
+  type: string;
+}
 
 @Component({
   selector: 'app-device-page',
@@ -26,14 +37,45 @@ export class DevicePageComponent implements OnInit, AfterViewInit {
   chart: Chart;
   values: Chart.ChartPoint[] = [];
   speed: number = 100;
+  
+
+  receivedMeasurements: MeasurementView[];
+  // receivedMeasurements: Measurement[] = [{
+  //   time: new Date(2020, 12, 5, 12, 30, 45),
+  //   type: "Temperature",
+  //   value : "22.5°C" 
+  // },
+  // {
+  //   time: new Date(2020, 12, 5, 12, 31, 46),
+  //   type: "Temperature",
+  //   value : "22.6°C" 
+  // },
+  // {
+  //   time: new Date(2020, 12, 5, 12, 32, 44),
+  //   type: "Temperature",
+  //   value : "22.7°C" 
+  // },
+  // {
+  //   time: new Date(2020, 12, 5, 12, 33, 50),
+  //   type: "Temperature",
+  //   value : "22.4°C" 
+  // },
+  // {
+  //   time: new Date(2020, 12, 5, 12, 30, 40),
+  //   type: "Temperature",
+  //   value : "22.2°C" 
+  // }];
+
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private deviceService: DeviceService,
+    private measurementsService: MeasurementService,
     private configurationService: ConfigurationService) {
 
     if (this.configurationService.isLoaded) {
-      this.setupSignalRConnection(this.configurationService.configuration.notificationServiceUrl)
+      this.setupSignalRConnection(this.configurationService.configuration.notificationServiceUrl);
+      
     } else {
       this.configurationService.configurationLoaded$.subscribe(conf => {
         this.setupSignalRConnection(this.configurationService.configuration.notificationServiceUrl)
@@ -44,12 +86,34 @@ export class DevicePageComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => this.deviceService.getDevice(+params.get('id')))
+      switchMap((params: ParamMap) => this.deviceService.getDevice(+params.get('id'))),
     ).subscribe(device => {
       this.device = device;
-    });
+      this.measurementsService.getMeasurements(device.deviceId).subscribe(a => {
+         this.receivedMeasurements = a.map(a => {
+          let mType : string;
+          let mValue: string;
+          if(a.type == 0) { 
+            mType = "Temperature" ;
+            mValue = a.value + "°C";
+          }
+           else if(a.type == 1) { 
+             mType = "Humidity";
+             mValue = a.value + "%";
+          }
 
-    
+          let mv : MeasurementView = {
+              type: mType,
+              dtReceived: a.dtReceived,
+              dtSent: a.dtSent,
+              value: mValue
+            }
+            return mv;
+         });
+
+         
+      })
+    });    
   }
 
   setupSignalRConnection(baseUrl: string) {
