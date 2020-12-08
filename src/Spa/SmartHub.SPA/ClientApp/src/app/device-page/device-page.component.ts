@@ -9,6 +9,7 @@ import * as signalR from '@aspnet/signalr';
 import * as Chart from "chart.js";
 import { Telemetry } from '../models/telemetry.model';
 import { ConfigurationService } from '../services/configuration.service';
+import { MeasurementService } from '../services/measurements.service';
 
 @Component({
   selector: 'app-device-page',
@@ -30,10 +31,12 @@ export class DevicePageComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private deviceService: DeviceService,
+    private measurementsService: MeasurementService,
     private configurationService: ConfigurationService) {
 
     if (this.configurationService.isLoaded) {
-      this.setupSignalRConnection(this.configurationService.configuration.notificationServiceUrl)
+      this.setupSignalRConnection(this.configurationService.configuration.notificationServiceUrl);
+      
     } else {
       this.configurationService.configurationLoaded$.subscribe(conf => {
         this.setupSignalRConnection(this.configurationService.configuration.notificationServiceUrl)

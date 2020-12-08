@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SmartHub.SPA
 {
@@ -13,5 +10,7 @@ namespace SmartHub.SPA
     public string SmartHubApiUrl { get; set; }
 
     public string IdentityUrl { get; set; }
+
+    public string EdgeUrl { get; set; }
   }
 }
