@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SmartHub.BusinessLogic.Contracts;
 using SmartHub.BusinessLogic.Models;
+using SmartHub.Devices.Application.Commands;
 using SmartHub.Models;
 
 namespace SmartHub.Controllers
@@ -14,12 +17,15 @@ namespace SmartHub.Controllers
   public class DeviceController : Controller
   {
     private readonly IDeviceService _deviceService;
+    private readonly IMediator _mediator;
+
     private readonly ILogger<DeviceController> _logger;
 
-    public DeviceController(IDeviceService deviceService, ILogger<DeviceController> logger)
+    public DeviceController(IDeviceService deviceService, IMediator mediator, ILogger<DeviceController> logger)
     {
       _logger = logger;
       _deviceService = deviceService;
+      _mediator = mediator;
     }
 
     [HttpGet]
@@ -62,11 +68,13 @@ namespace SmartHub.Controllers
 
 
     [HttpPost("register")]
-    public IActionResult Register([FromBody]RegisterDeviceModel registerDeviceModel)
+    public async Task<IActionResult> Register([FromBody]RegisterDeviceCommand registerDeviceCommand)
     {
-      _logger.LogInformation("Registering new device", registerDeviceModel);
-      var userId = Guid.Parse(User.Identity.Name);
-      _deviceService.RegisterDevice(registerDeviceModel.Name, registerDeviceModel.Description, userId);
+      _logger.LogInformation("Registering new device", registerDeviceCommand);
+
+      var success = await _mediator.Send(registerDeviceCommand);
+
+      if (!success) return BadRequest();
 
       return Ok();
     }

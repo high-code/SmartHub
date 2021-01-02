@@ -44,7 +44,7 @@ namespace SmartHub.Edge
                .AllowAnyMethod()
                .AllowAnyHeader();
       }));
-
+      services.AddHttpContextAccessor();
       var container = new ContainerBuilder();
 
       container.RegisterModule(new ApplicationModule());

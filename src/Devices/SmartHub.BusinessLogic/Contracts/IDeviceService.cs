@@ -8,7 +8,7 @@ namespace SmartHub.BusinessLogic.Contracts
   {
     void AddDevice(Device device);
 
-    void RegisterDevice(string name, string description, Guid userId);
+    Infrastructure.Entities.Device RegisterDevice(string name, string description, Guid userId);
 
     void UpdateDevice(int id,Device device);
 
