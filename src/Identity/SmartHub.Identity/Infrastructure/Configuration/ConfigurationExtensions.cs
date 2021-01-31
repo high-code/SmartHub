@@ -12,18 +12,18 @@ namespace SmartHub.Identity.Infrastructure.Configuration
       clientEntityBuilder.ToTable("clients");
       clientEntityBuilder.HasKey(x => x.Id);
 
-      //clientEntityBuilder.Property(x => x.ClientId).HasMaxLength(200).IsRequired();
-      //clientEntityBuilder.Property(x => x.ClientName).HasMaxLength(200);
-      //clientEntityBuilder.Property(x => x.UserId);
+      clientEntityBuilder.Property(x => x.ClientId).HasMaxLength(200).IsRequired();
+      clientEntityBuilder.Property(x => x.ClientName).HasMaxLength(200);
+      clientEntityBuilder.Property(x => x.UserId);
 
-      //clientEntityBuilder.HasIndex(x => x.ClientId).IsUnique();
-      //clientEntityBuilder.HasIndex(x => x.UserId);
+      clientEntityBuilder.HasIndex(x => x.ClientId).IsUnique();
+      clientEntityBuilder.HasIndex(x => x.UserId);
 
-      //clientEntityBuilder.HasMany(x => x.AllowedGrantTypes).WithOne(x => x.Client).IsRequired();
-      //clientEntityBuilder.HasMany(x => x.RedirectUris).WithOne(x => x.Client).HasForeignKey(x => x.ClientId).IsRequired();
-      //clientEntityBuilder.HasMany(x => x.PostLogoutRedirectUris).WithOne(x => x.Client).HasForeignKey(x => x.ClientId).IsRequired();
-      //clientEntityBuilder.HasMany(x => x.AllowedScopes).WithOne(x => x.Client).HasForeignKey(x => x.ClientId).IsRequired();
-      //clientEntityBuilder.HasMany(x => x.ClientSecrets).WithOne(x => x.Client).HasForeignKey(x => x.ClientId).IsRequired();
+      clientEntityBuilder.HasMany(x => x.AllowedGrantTypes).WithOne(x => x.Client).IsRequired();
+      clientEntityBuilder.HasMany(x => x.RedirectUris).WithOne(x => x.Client).HasForeignKey(x => x.ClientId).IsRequired();
+      clientEntityBuilder.HasMany(x => x.PostLogoutRedirectUris).WithOne(x => x.Client).HasForeignKey(x => x.ClientId).IsRequired();
+      clientEntityBuilder.HasMany(x => x.AllowedScopes).WithOne(x => x.Client).HasForeignKey(x => x.ClientId).IsRequired();
+      clientEntityBuilder.HasMany(x => x.ClientSecrets).WithOne(x => x.Client).HasForeignKey(x => x.ClientId).IsRequired();
     }
 
     public static void ConfigureClientGrantTypeEntity(EntityTypeBuilder<ClientGrantType> clientGrantTypeEntityBuilder)

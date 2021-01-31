@@ -1,16 +1,16 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SmartHub.Identity.Context;
 using SmartHub.Identity.Identity;
+using SmartHub.Identity.Infrastructure;
 
 namespace SmartHub.Identity
 {
@@ -39,6 +39,16 @@ namespace SmartHub.Identity
         o.UseNpgsql(Configuration.GetConnectionString("Default"));
       });
 
+      services.AddEntityFrameworkNpgsql().AddDbContext<IdentityServerDbContext>(o =>
+      {
+        o.UseNpgsql(Configuration.GetConnectionString("Default"),
+          sqlOptions =>
+          {
+            sqlOptions.MigrationsAssembly("SmartHub.Identity");
+            sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorCodesToAdd: null);
+          });
+      }, ServiceLifetime.Scoped);
+
       // add identity
       services.AddIdentity<ApplicationUser,IdentityRole>()
         .AddRoles<IdentityRole>()
@@ -47,8 +57,9 @@ namespace SmartHub.Identity
 
       services.AddIdentityServer(
           option => { option.IssuerUri = "devenv"; })
-        .AddInMemoryClients(Config.GetClients(Configuration))
+        //.AddInMemoryClients(Config.GetClients(Configuration))
         .AddInMemoryApiResources(Config.GetAPis())
+        .AddClientStore<EFClientStore>()
         .AddInMemoryIdentityResources(Config.GetIdentityResources())
         .AddDeveloperSigningCredential()
         .AddAspNetIdentity<ApplicationUser>();

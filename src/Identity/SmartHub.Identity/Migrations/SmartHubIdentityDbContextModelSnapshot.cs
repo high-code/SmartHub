@@ -17,7 +17,7 @@ namespace SmartHub.Identity.Migrations
             modelBuilder
                 .HasDefaultSchema("idn")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
+                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -48,7 +48,7 @@ namespace SmartHub.Identity.Migrations
                     b.ToTable("roles");
 
                     b.HasData(
-                        new { Id = "09fe8272-cdff-489f-89f2-7303deb389dc", ConcurrencyStamp = "9576198b-6db3-469c-8636-9d4c565bf8d4", Name = "Admin", NormalizedName = "ADMIN" }
+                        new { Id = "bed79545-4c6e-4a9d-aa53-d99681386f37", ConcurrencyStamp = "03fb8ee4-f545-47ec-9d56-c18bdf0f776d", Name = "Admin", NormalizedName = "ADMIN" }
                     );
                 });
 
