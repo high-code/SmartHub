@@ -4,6 +4,11 @@ using System.Linq.Expressions;
 
 namespace SmartHub.DataAccess.Contracts
 {
+  public interface IRepository<TContext,TEntity> : IRepository<TEntity> where TEntity : class                                                                        where TContext : class
+  {
+    TContext Context { get; }
+  }
+
   public interface IRepository<TEntity> where TEntity : class
   {
     TEntity Get(int id);

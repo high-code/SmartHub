@@ -1,7 +1,7 @@
 ﻿using SmartHub.Messaging.Events;
 using System;
 
-namespace SmartHub.Devices.Application.IntegrationEvents
+namespace SmartHub.Identity.Application.IntegrationEvents.Events
 {
   public class DeviceRegisteredIntegrationEvent : IntegrationEvent
   {
