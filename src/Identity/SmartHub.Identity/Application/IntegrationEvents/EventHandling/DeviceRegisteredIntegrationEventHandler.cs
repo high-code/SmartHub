@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using SmartHub.DataAccess.Contracts;
@@ -49,7 +50,13 @@ namespace SmartHub.Identity.Application.IntegrationEvents
             Scope = "smarthub"
           }
         },
-        AlwaysIncludeUserClaimsInIdToken = true
+        ClientSecrets = new List<ClientSecret>
+        {
+          new ClientSecret()
+          {
+            Value = "device".ToSha256()
+          }
+        }
       };
       _repository.Add(client);
       _repository.Context.SaveChanges();

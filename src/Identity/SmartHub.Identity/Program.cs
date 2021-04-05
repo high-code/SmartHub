@@ -11,6 +11,8 @@ using Serilog;
 using SmartHub.Identity.Infrastructure;
 using SmartHub.Identity;
 using Microsoft.Extensions.Logging;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace SmartHub.Edge
 {
@@ -29,7 +31,7 @@ namespace SmartHub.Edge
         var webHost = CreateWebHostBuilder(configuration, args).Build();
 
         Log.Information("Applying migration {ApplicationContext}", AppName);
-        webHost.MigrateDbContext<IdentityServerDbContext>((context ,services) =>
+        webHost.MigrateDbContext<IdentityServerDbContext>((context, services) =>
         {
           var logger = services.GetService<ILogger<IdentityServerDbContextSeed>>();
           var dbContext = services.GetService<IdentityServerDbContext>();
@@ -73,9 +75,13 @@ namespace SmartHub.Edge
       var seqServerUrl = configuration["Serilog:SeqServerUrl"];
       return new LoggerConfiguration()
         .MinimumLevel.Verbose()
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+        .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+        .MinimumLevel.Override("System", LogEventLevel.Warning)
+        .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
         .Enrich.FromLogContext()
         .Enrich.WithProperty("ApplicationContext", AppName)
-        .WriteTo.Console()
+        .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
         .WriteTo.Seq(seqServerUrl)
         .ReadFrom.Configuration(configuration)
         .CreateLogger();

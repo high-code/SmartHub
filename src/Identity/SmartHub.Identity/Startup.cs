@@ -64,7 +64,7 @@ namespace SmartHub.Identity
         .AddDefaultTokenProviders();
 
       services.AddIdentityServer(
-          option => { option.IssuerUri = "devenv"; })
+          option => { option.IssuerUri = "https://localhost:5001"; })
         //.AddInMemoryClients(Config.GetClients(Configuration))
         .AddInMemoryApiResources(Config.GetAPis())
         .AddClientStore<EFClientStore>()
