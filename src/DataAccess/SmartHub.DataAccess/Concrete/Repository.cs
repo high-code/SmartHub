@@ -7,11 +7,14 @@ using SmartHub.DataAccess.Contracts;
 
 namespace SmartHub.DataAccess.Concrete
 {
-  public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+  public class Repository<TContext, TEntity> : IRepository<TContext, TEntity> where TContext : DbContext
+                                                                              where TEntity : class
   {
-    protected DbContext DbContext;
+    public TContext Context => DbContext;
 
-    public Repository(DbContext dbContext)
+    protected TContext DbContext;
+
+    public Repository(TContext dbContext)
     {
       DbContext = dbContext;
     }

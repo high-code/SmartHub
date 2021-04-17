@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SmartHub.Identity.Identity;
 using SmartHub.DataAccess;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace SmartHub.Identity.Context
 {
@@ -36,6 +37,21 @@ namespace SmartHub.Identity.Context
 
       builder.ToSnakeCaseNamingConventions();
 
+    }
+  }
+
+  public class SmartHubIdentityDbContextDesignFactory : IDesignTimeDbContextFactory<SmartHubIdentityDbContext>
+  {
+    public SmartHubIdentityDbContext CreateDbContext(string[] args)
+    {
+      var optionsBuilder = new DbContextOptionsBuilder<SmartHubIdentityDbContext>()
+        .UseNpgsql("User ID = postgres;Password=admin;Server=localhost;Port=5432;Database=smarthub_identity;Integrated Security=true; Pooling=true;", options =>
+        {
+
+          options.MigrationsAssembly("SmartHub.Identity");
+        });
+
+      return new SmartHubIdentityDbContext(optionsBuilder.Options);
     }
   }
 }

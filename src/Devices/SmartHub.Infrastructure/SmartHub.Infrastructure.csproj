@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SmartHub.IntegrationEventLog\SmartHub.IntegrationEventLog.csproj" />
     <ProjectReference Include="..\..\DataAccess\SmartHub.DataAccess\SmartHub.DataAccess.csproj" />
   </ItemGroup>
 

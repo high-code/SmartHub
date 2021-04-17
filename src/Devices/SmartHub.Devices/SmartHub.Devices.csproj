@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="MediatR" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.1.1" />
@@ -31,10 +34,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\DTO\" />
     <Folder Include="Models\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SmartHub.IntegrationEventLog\SmartHub.IntegrationEventLog.csproj" />
+    <ProjectReference Include="..\..\..\SmartHub.Messaging.RabbitMQ\SmartHub.Messaging.RabbitMQ.csproj" />
+    <ProjectReference Include="..\..\..\SmartHub.Messaging\SmartHub.Messaging.csproj" />
     <ProjectReference Include="..\SmartHub.BusinessLogic\SmartHub.BusinessLogic.csproj" />
     <ProjectReference Include="..\SmartHub.Infrastructure\SmartHub.Infrastructure.csproj" />
   </ItemGroup>

@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHub.MediatR", "SmartHu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHub.Edge", "src\Edge\SmartHub.Edge\SmartHub.Edge.csproj", "{362F25A9-F1CC-4C97-ADBA-B7D7A04A4826}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartHub.TestDevice", "src\SmartHub.TestDevice\SmartHub.TestDevice.csproj", "{F8B03067-ED43-4E43-AB61-7E25BF8E7784}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,10 @@ Global
 		{362F25A9-F1CC-4C97-ADBA-B7D7A04A4826}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{362F25A9-F1CC-4C97-ADBA-B7D7A04A4826}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{362F25A9-F1CC-4C97-ADBA-B7D7A04A4826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8B03067-ED43-4E43-AB61-7E25BF8E7784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8B03067-ED43-4E43-AB61-7E25BF8E7784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8B03067-ED43-4E43-AB61-7E25BF8E7784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8B03067-ED43-4E43-AB61-7E25BF8E7784}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,6 +144,7 @@ Global
 		{F3D89A1A-A14E-4346-99D1-E7A51B14D2B2} = {D52F3BA9-595B-4E4E-94A5-FFB89665B4DA}
 		{409C34F2-4035-4367-ABBB-A05F30258D30} = {D52F3BA9-595B-4E4E-94A5-FFB89665B4DA}
 		{362F25A9-F1CC-4C97-ADBA-B7D7A04A4826} = {5B86AC6A-5356-4A9B-8E8F-6CC998D6F15C}
+		{F8B03067-ED43-4E43-AB61-7E25BF8E7784} = {D52F3BA9-595B-4E4E-94A5-FFB89665B4DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE7104F7-C501-4991-816A-18A09A499913}

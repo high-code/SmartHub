@@ -3,7 +3,7 @@ using SmartHub.Infrastructure.Entities;
 using SmartHub.DataAccess.Concrete;
 namespace SmartHub.Infrastructure.Concrete
 {
-  public class DeviceRepository : Repository<Device>, IDeviceRepository
+  public class DeviceRepository : Repository<SmartHubContext,Device>, IDeviceRepository
   {
     public DeviceRepository(SmartHubContext context) : base(context)
     { }

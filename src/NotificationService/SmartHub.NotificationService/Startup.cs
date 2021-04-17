@@ -39,7 +39,6 @@ namespace SmartHub.NotificationService
         options.CheckConsentNeeded = context => true;
         options.MinimumSameSitePolicy = SameSiteMode.None;
       });
-            services.AddLogging();
       services.AddLogging(
         loggingBuilder => loggingBuilder.AddSeq(Configuration.GetSection("Seq")))
         .AddCustomIntegrations(Configuration)

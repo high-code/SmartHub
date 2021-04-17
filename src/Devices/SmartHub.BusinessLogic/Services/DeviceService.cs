@@ -26,7 +26,7 @@ namespace SmartHub.BusinessLogic.Services
       _unitOfWork.Commit();
     }
 
-    public void RegisterDevice(string name, string description, Guid userId)
+    public Infrastructure.Entities.Device RegisterDevice(string name, string description, Guid userId)
     {
       
       var device = new Infrastructure.Entities.Device
@@ -39,6 +39,8 @@ namespace SmartHub.BusinessLogic.Services
 
       _unitOfWork.Devices.Add(device);
       _unitOfWork.Commit();
+
+      return device;
     }
 
     public void UpdateDevice(int id, Device device)
